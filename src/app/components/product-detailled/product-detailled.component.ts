@@ -3,15 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
-
-interface Funko {
-  id: number;
-  name: string;
-  series: string;
-  price: number;
-  description: string;
-  image: string;
-}
+import {Funko} from '../../../funko';
 
 @Component({
   selector: 'app-product-detailled',

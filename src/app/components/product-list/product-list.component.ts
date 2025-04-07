@@ -2,20 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {Funko} from '../../../funko';
+import {ProductComponent} from '../product/product.component';
 
-interface Funko {
-  id: number;
-  name: string;
-  series: string;
-  price: number;
-  description: string;
-  image: string;
-}
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, ProductComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
