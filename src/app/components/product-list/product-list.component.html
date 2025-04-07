@@ -1,0 +1,22 @@
+<main>
+  <section id="loading_indicator" *ngIf="loading">
+    <p>Cargando productos...</p>
+  </section>
+
+  <section id="error_message" *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </section>
+
+  <section id="product_list_container" *ngIf="!loading && !errorMessage">
+    <section *ngFor="let funko of funkos" class="product_holder">
+      <section class="product_info">
+        <img class="product_image" [src]="funko?.image" [alt]="funko?.name" />
+        <section class="funko_details">
+          <h2 class="product_name">{{ funko?.name }}</h2>
+          <h3 class="product_description">{{ funko?.series }}</h3>
+          <button (click)="funko?.id !== undefined ? viewProductDetailled(funko.id) : null" class="product_button">View</button>        </section>
+      </section>
+      <p class="product_price">{{ funko?.price }}€</p>
+    </section>
+  </section>
+</main>

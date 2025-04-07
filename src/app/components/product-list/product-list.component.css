@@ -51,6 +51,7 @@ main {
 }
 
 .product_button {
+  border: none;
   text-decoration: none;
   font-size: 1rem;
   text-align: center;
@@ -58,7 +59,7 @@ main {
   border-radius: 20px;
   color: white;
   width: 75px;
-  margin-top: 10px;
+  padding: 0.2rem;
 }
 
 .product_name {
