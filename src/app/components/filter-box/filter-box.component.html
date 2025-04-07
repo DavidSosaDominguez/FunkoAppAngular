@@ -1,0 +1,29 @@
+<form class="filter-box" *ngIf="isVisible">
+  <fieldset>
+    <legend>Collection</legend>
+    <label><input type="checkbox" name="collection"> INVINCIBLE</label>
+    <label><input type="checkbox" name="collection"> LOL</label>
+    <label><input type="checkbox" name="collection"> STAR WARS</label>
+    <label><input type="checkbox" name="collection"> HARRY POTTER</label>
+  </fieldset>
+
+  <fieldset class="price-range">
+    <legend>Price Range</legend>
+    <section class="range-container">
+      <label class="min-price">0 €</label>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        [value]="priceValue"
+        (input)="onPriceChange($event)" />
+      <label class="max-price">100 €</label>
+    </section>
+
+    <!-- Display the selected price value below the slider -->
+    <section class="price-value">
+      <p>Max. Price: {{ priceValue }} €</p>
+    </section>
+    <button type="button" class="apply-filters"> Apply Filters</button>
+  </fieldset>
+</form>
