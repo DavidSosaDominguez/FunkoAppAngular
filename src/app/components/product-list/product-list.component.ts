@@ -5,6 +5,8 @@ import {Funko} from '../../../funko';
 import {ProductComponent} from '../product/product.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FilterService } from '../../services/filter.service';
+import {inject} from '@angular/core/testing';
+import {FiguresService} from '../../../figures.service';
 
 
 interface ParsedFunko extends Omit<Funko, 'price'> {
@@ -23,6 +25,10 @@ export class ProductListComponent implements OnInit, OnChanges {
   filteredFunkos: ParsedFunko[] = [];
   loading = true;
   errorMessage = '';
+
+  private funkoService: FiguresService = new FiguresService();
+  funkoList = this.funkoService.getAllFunkos();
+
 
   // Valores predeterminados para los filtros
   priceFilter: number = 100;

@@ -1,6 +1,6 @@
 <main>
   <section id="product_list_container" *ngIf="!loading && !errorMessage">
-    <app-product *ngFor="let funko of funkos" class="product_holder"
+    <app-product *ngFor="let funko of funkoList" class="product_holder"
       [funko] = "funko">
     </app-product>
   </section>
