@@ -1,3 +1,4 @@
+// src/app/components/product-detailled/product-detailled.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -20,7 +21,12 @@ export class ProductDetailledComponent implements OnInit {
   loadingRelated: boolean = true;
   errorRelatedMessage: string | null = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
+  // Nuevo: inyectamos FilterService
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.loadProduct();

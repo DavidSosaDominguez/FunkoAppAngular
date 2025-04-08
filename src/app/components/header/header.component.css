@@ -4,6 +4,7 @@
 }
 
 header {
+  margin-bottom: 20px;
   background-color: #85C6FF;
   display: flex;
   flex-direction: row;
@@ -13,6 +14,7 @@ header {
 }
 
 .logo-title-list {
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 20px;

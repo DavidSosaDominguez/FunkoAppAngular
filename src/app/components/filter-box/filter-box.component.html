@@ -1,0 +1,32 @@
+<form class="filter-box" *ngIf="isVisible">
+  <fieldset>
+    <legend>Collection</legend>
+    <label *ngFor="let category of categories">
+      <input type="checkbox"
+             [checked]="selectedCategories.has(category)"
+             (change)="onCheckboxChange($event, category)">
+      {{ category }}
+    </label>
+  </fieldset>
+
+  <fieldset class="price-range">
+    <legend>Price Range</legend>
+    <section class="range-container">
+      <label class="min-price">0 €</label>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        [value]="priceValue"
+        (input)="onPriceChange($event)" />
+      <label class="max-price">100 €</label>
+    </section>
+
+    <section class="price-value">
+      <p>Max. Price: {{ priceValue }} €</p>
+    </section>
+
+    <!-- ✅ Botón para aplicar filtros -->
+    <button type="button" class="apply-filters" (click)="applyFilters()">Apply Filters</button>
+  </fieldset>
+</form>

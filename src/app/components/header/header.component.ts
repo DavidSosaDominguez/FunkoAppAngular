@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FilterService } from '../../services/filter.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,4 +8,13 @@ import { Component } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  constructor(private filterService: FilterService, private router: Router, private activatedRoute: ActivatedRoute) { }
+
+  toggleFilter(): void {
+    this.filterService.toggleVisibility(); // Alterna la visibilidad
+  }
+  returnHome(): void {
+    this.router.navigate(['']);
+  }
+}
