@@ -15,8 +15,7 @@ export class FilterService {
     categories: []
   });
 
-  filters$ = this.filters.asObservable(); // Observable para suscripción
-
+  filters$ = this.filters.asObservable();
   constructor() {}
 
   applyFilters(maxPrice: number, categories: string[]): void {

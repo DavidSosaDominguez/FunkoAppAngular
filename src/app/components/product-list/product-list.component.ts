@@ -53,21 +53,18 @@ export class ProductListComponent implements OnInit, OnChanges {
         this.selectedCategories = new Set(params['categories'].split(','));
       }
 
-      // Aplica los filtros cuando se cargan los parámetros
       this.applyFilters({
         maxPrice: this.priceFilter,
         categories: Array.from(this.selectedCategories)
       });
     });
 
-    // Suscripción para escuchar cambios de filtros en el servicio (si aplica)
     this.filterService.filters$.subscribe((filters) => {
       this.applyFilters(filters);
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Si cambian los parámetros de la URL (por ejemplo, el precio o las categorías), aplicar filtros
     if (changes['priceFilter'] || changes['selectedCategories']) {
       this.applyFilters({
         maxPrice: this.priceFilter,
@@ -83,7 +80,12 @@ export class ProductListComponent implements OnInit, OnChanges {
           ...funko,
           price: parseFloat(funko.price.replace(',', '.')) // Convierte de string a number
         }));
-        this.filteredFunkos = this.funkos; // Mostrar todos al inicio
+
+        this.applyFilters({
+          maxPrice: this.priceFilter,
+          categories: Array.from(this.selectedCategories)
+        });
+
         this.loading = false;
       },
       (error) => {
@@ -93,8 +95,8 @@ export class ProductListComponent implements OnInit, OnChanges {
     );
   }
 
+
   applyFilters(filters: { maxPrice: number; categories: string[] }): void {
-    // Filtra los funkos en función de los filtros seleccionados
     this.filteredFunkos = this.funkos.filter(funko =>
       funko.price <= filters.maxPrice &&
       (filters.categories.length === 0 || filters.categories.includes(funko.series))
