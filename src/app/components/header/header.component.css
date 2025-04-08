@@ -4,6 +4,7 @@
 }
 
 header {
+  margin-bottom: 20px;
   background-color: #85C6FF;
   display: flex;
   flex-direction: row;

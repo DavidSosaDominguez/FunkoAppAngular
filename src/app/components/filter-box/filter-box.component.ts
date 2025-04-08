@@ -1,6 +1,7 @@
 // src/app/components/filter-box/filter-box.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FilterService } from '../../services/filter.service';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,7 +19,11 @@ export class FilterBoxComponent implements OnInit {
   categories = ['INVINCIBLE', 'LOL', 'STAR WARS', 'HARRY POTTER'];
   selectedCategories: Set<string> = new Set(this.categories); // Seleccionados por defecto
 
-  constructor(private filterService: FilterService) {}
+  constructor(
+    private filterService: FilterService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.filterService.isVisible$.subscribe((visible) => {
@@ -40,11 +45,19 @@ export class FilterBoxComponent implements OnInit {
     }
   }
 
-  // ✅ Aplicar los filtros solo al hacer clic
   applyFilters(): void {
+    // Aplica los filtros en el servicio
     this.filterService.applyFilters(
       this.priceValue,
       Array.from(this.selectedCategories)
     );
+
+    // Redirige a la página principal ('/') con los filtros como parámetros de consulta
+    this.router.navigate([''], {
+      queryParams: {
+        price: this.priceValue,
+        categories: Array.from(this.selectedCategories).join(',')
+      }
+    });
   }
 }

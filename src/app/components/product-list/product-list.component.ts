@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FilterService } from '../../services/filter.service';
 
-// Interfaz original para el JSON
 interface Funko {
   id: number;
   name: string;
@@ -14,7 +13,6 @@ interface Funko {
   image: string;
 }
 
-// Interfaz con precio convertido a number
 interface ParsedFunko extends Omit<Funko, 'price'> {
   price: number;
 }
@@ -26,25 +24,64 @@ interface ParsedFunko extends Omit<Funko, 'price'> {
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnChanges {
   funkos: ParsedFunko[] = [];
   filteredFunkos: ParsedFunko[] = [];
   loading = true;
   errorMessage = '';
 
+  // Valores predeterminados para los filtros
+  priceFilter: number = 100;
+  selectedCategories: Set<string> = new Set();
+
   constructor(
     private http: HttpClient,
     private router: Router,
+    private activatedRoute: ActivatedRoute, // Para leer los parámetros de la URL
     private filterService: FilterService
   ) {}
 
   ngOnInit(): void {
-    // Cargar los datos del JSON y convertir el precio a número
+    this.loadFunkos();
+
+    // Suscripción para escuchar los cambios en los parámetros de la URL
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['price']) {
+        this.priceFilter = Number(params['price']);
+      }
+      if (params['categories']) {
+        this.selectedCategories = new Set(params['categories'].split(','));
+      }
+
+      // Aplica los filtros cuando se cargan los parámetros
+      this.applyFilters({
+        maxPrice: this.priceFilter,
+        categories: Array.from(this.selectedCategories)
+      });
+    });
+
+    // Suscripción para escuchar cambios de filtros en el servicio (si aplica)
+    this.filterService.filters$.subscribe((filters) => {
+      this.applyFilters(filters);
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Si cambian los parámetros de la URL (por ejemplo, el precio o las categorías), aplicar filtros
+    if (changes['priceFilter'] || changes['selectedCategories']) {
+      this.applyFilters({
+        maxPrice: this.priceFilter,
+        categories: Array.from(this.selectedCategories)
+      });
+    }
+  }
+
+  loadFunkos(): void {
     this.http.get<Funko[]>('assets/funkos_data.json').subscribe(
       (data: Funko[]) => {
         this.funkos = data.map(funko => ({
           ...funko,
-          price: parseFloat(funko.price.replace(',', '.')) // convierte string a number
+          price: parseFloat(funko.price.replace(',', '.')) // Convierte de string a number
         }));
         this.filteredFunkos = this.funkos; // Mostrar todos al inicio
         this.loading = false;
@@ -54,17 +91,18 @@ export class ProductListComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
 
-    // Aplicar filtros solo cuando se pulsa "Apply Filters"
-    this.filterService.filters$.subscribe((filters) => {
-      this.filteredFunkos = this.funkos.filter(funko =>
-        funko.price <= filters.maxPrice &&
-        (filters.categories.length === 0 || filters.categories.includes(funko.series))
-      );
-    });
+  applyFilters(filters: { maxPrice: number; categories: string[] }): void {
+    // Filtra los funkos en función de los filtros seleccionados
+    this.filteredFunkos = this.funkos.filter(funko =>
+      funko.price <= filters.maxPrice &&
+      (filters.categories.length === 0 || filters.categories.includes(funko.series))
+    );
   }
 
   viewProductDetailled(productId: number) {
     this.router.navigate(['/product-detail', productId]);
   }
 }
+
