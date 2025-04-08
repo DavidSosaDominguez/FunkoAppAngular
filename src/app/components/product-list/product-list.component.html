@@ -8,7 +8,7 @@
   </section>
 
   <section id="product_list_container" *ngIf="!loading && !errorMessage">
-    <section *ngFor="let funko of funkos" class="product_holder">
+    <section *ngFor="let funko of filteredFunkos" class="product_holder">
       <section class="product_info">
         <img class="product_image" [src]="funko?.image" [alt]="funko?.name" />
         <section class="funko_details">
