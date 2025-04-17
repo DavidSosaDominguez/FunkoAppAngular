@@ -69,8 +69,6 @@ export class ProductDetailedComponent implements OnInit {
   }
 
   viewProductDetailed(id: number): void {
-    // Navegación sin recargar la página completa
     this.router.navigate(['/product-detail', id]);
-    // No necesitamos then() porque el params subscription se encarga
   }
 }

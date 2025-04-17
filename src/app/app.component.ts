@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FilterBoxComponent } from './components/filter-box/filter-box.component';
+import {ShoppingResumeComponent} from './components/shopping-resume/shopping-resume.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FilterBoxComponent],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FilterBoxComponent, ShoppingResumeComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

@@ -1,0 +1,15 @@
+<form class="shopping-resume" *ngIf="isVisible">
+  <fieldset class="product" *ngFor="let product of products">
+    <img [src]="product.image" alt="{{ product.name }}">
+    <article class="product-details">
+      <p class="product-name">{{ product.name }}</p>
+      <p class="product-price">{{ product.price }} €</p>
+      <p class="product-quantity">x {{ product.quantity }} units</p>
+    </article>
+  </fieldset>
+  <fieldset class="total-section">
+    <span class="total-label">TOTAL:</span>
+    <span class="total-price">{{ totalPrice }} €</span>
+    <button type="submit" class="reserve-button">Buy</button>
+  </fieldset>
+</form>

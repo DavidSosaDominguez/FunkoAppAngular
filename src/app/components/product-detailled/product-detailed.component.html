@@ -7,14 +7,12 @@
     <article id="product_display">
       <section class="product_sections">
         <figure id="product_image_container">
-          <!-- Eliminado ?. porque funko está verificado en el @if -->
           <img id="product_image" [src]="funko.image" [alt]="funko.name" />
         </figure>
       </section>
 
       <section id="product_info" class="product_sections">
         <section id="product_def_container">
-          <!-- Eliminados todos los ?. innecesarios -->
           <h1 id="product_title">{{ funko.name }}</h1>
           <h2 id="category_text">{{ funko.series }}</h2>
         </section>
