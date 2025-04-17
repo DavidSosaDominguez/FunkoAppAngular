@@ -1,15 +1,13 @@
-// src/app/components/product-detailled/product-detailled.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
-import {Funko} from '../../../funko';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Funko } from '../../../funko';
+import { FiguresService } from '../../../figures.service';
 
 @Component({
   selector: 'app-product-detailled',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, RouterModule], // Eliminamos HttpClientModule
   templateUrl: './product-detailled.component.html',
   styleUrls: ['./product-detailled.component.css']
 })
@@ -21,9 +19,9 @@ export class ProductDetailledComponent implements OnInit {
   loadingRelated: boolean = true;
   errorRelatedMessage: string | null = null;
 
-  // Nuevo: inyectamos FilterService
+  private funkoService = inject(FiguresService); // Inyectamos el servicio
+
   constructor(
-    private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
   ) {}
@@ -34,38 +32,26 @@ export class ProductDetailledComponent implements OnInit {
 
   loadProduct(): void {
     const productId = +this.route.snapshot.paramMap.get('id')!;
-    this.http.get<Funko[]>('assets/funkos_data.json').subscribe(
-      (data: Funko[]) => {
-        this.funko = data.find((f) => f.id === productId);
-        this.loading = false;
 
-        if (!this.funko) {
-          this.errorMessage = 'Producto no encontrado';
-          return;
-        }
+    // Obtenemos los datos del servicio en lugar de HTTP
+    const allFunkos = this.funkoService.getAllFunkos();
+    this.funko = allFunkos.find((f) => f.id === productId);
+    this.loading = false;
 
-        this.loadRelatedProducts(productId);
-      },
-      () => {
-        this.errorMessage = 'Error al cargar los datos del producto';
-        this.loading = false;
-      }
-    );
+    if (!this.funko) {
+      this.errorMessage = 'Producto no encontrado';
+      return;
+    }
+
+    this.loadRelatedProducts(productId);
   }
 
   loadRelatedProducts(productId: number): void {
-    this.http.get<Funko[]>('assets/funkos_data.json').subscribe(
-      (relatedData: Funko[]) => {
-        this.relatedFunkos = relatedData.filter(
-          (f) => f.series === this.funko?.series && f.id !== productId
-        );
-        this.loadingRelated = false;
-      },
-      () => {
-        this.errorRelatedMessage = 'No se encuentran productos relacionados';
-        this.loadingRelated = false;
-      }
+    const allFunkos = this.funkoService.getAllFunkos();
+    this.relatedFunkos = allFunkos.filter(
+      (f) => f.series === this.funko?.series && f.id !== productId
     );
+    this.loadingRelated = false;
   }
 
   viewProductDetailled(productId: number): void {

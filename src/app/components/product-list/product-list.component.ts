@@ -1,45 +1,55 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {Funko} from '../../../funko';
-import {ProductComponent} from '../product/product.component';
-import {FiguresService} from '../../../figures.service';
-
+import { FiguresService } from '../../../figures.service';
+import { FilterService } from '../../services/filter.service';
+import { ProductComponent } from '../product/product.component';
+import { Funko } from '../../../funko';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, ProductComponent],
+  imports: [CommonModule, ProductComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  funkos: Funko[] = [];
-  loading = true;
-  errorMessage = '';
+  filteredFunkos: Funko[] = [];
+  loading = false;
+  errorMessage: string | null = null; // Add this if you need error handling
 
-  funkoService = inject(FiguresService);
-
-
-  constructor(private http: HttpClient, private router: Router) {
-    this.funkos = this.funkoService.getAllFunkos();
-  }
+  private funkoService = inject(FiguresService);
+  private filterService = inject(FilterService);
 
   ngOnInit(): void {
-    this.http.get<Funko[]>('assets/funkos_data.json').subscribe(
-      (data: Funko[]) => {
-        this.funkos = data;
-        this.loading = false;
-      },
-      (error) => {
-        this.errorMessage = 'Error al cargar los productos';
-        this.loading = false;
-      }
-    );
+
+    this.loadFilteredProducts();
+    this.filterService.filters$.subscribe(() => {
+      this.loadFilteredProducts();
+    });
   }
 
-  viewProductDetailled(productId: number) {
-    this.router.navigate(['/product-detail', productId]);
+  loadFilteredProducts(): void {
+    this.loading = true;
+    try {
+      const allFunkos = this.funkoService.getAllFunkos();
+      console.log('All Funkos:', allFunkos);
+      const filters = this.filterService.getCurrentFilters();
+      console.log('Filters:', filters);
+
+      this.filteredFunkos = allFunkos.filter(funko => {
+        const price = Number(funko.price.replace(',', '.'));
+        console.log('Price parsed:', Number(funko.price.replace(',', '.')));
+        return price <= filters.maxPrice &&
+          filters.categories.includes(funko.series);
+      });
+
+      this.errorMessage = null;
+    } catch (error) {
+      this.errorMessage = 'Failed to load products';
+      this.filteredFunkos = [];
+    } finally {
+      this.loading = false;
+    }
   }
 }
