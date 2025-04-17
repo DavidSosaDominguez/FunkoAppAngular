@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { FiguresService } from '../../../figures.service';
 import { FilterService } from '../../services/filter.service';
 import { ProductComponent } from '../product/product.component';
