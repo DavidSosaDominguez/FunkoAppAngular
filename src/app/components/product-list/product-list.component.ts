@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FiguresService } from '../../../figures.service';
+import { FiguresService } from '../../services/figures.service';
 import { FilterService } from '../../services/filter.service';
 import { ProductComponent } from '../product/product.component';
 import { Funko } from '../../../funko';
@@ -15,7 +15,7 @@ import { Funko } from '../../../funko';
 export class ProductListComponent implements OnInit {
   filteredFunkos: Funko[] = [];
   loading = false;
-  errorMessage: string | null = null; // Add this if you need error handling
+  errorMessage: string | null = null;
 
   private funkoService = inject(FiguresService);
   private filterService = inject(FilterService);

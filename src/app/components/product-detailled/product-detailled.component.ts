@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Funko } from '../../../funko';
-import { FiguresService } from '../../../figures.service';
+import { FiguresService } from '../../services/figures.service';
 
 @Component({
   selector: 'app-product-detailled',
