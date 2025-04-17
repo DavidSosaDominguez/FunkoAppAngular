@@ -12,5 +12,3 @@ import { FilterBoxComponent } from './components/filter-box/filter-box.component
   styleUrls: ['./app.component.css']
 })
 export class AppComponent { }
-
-

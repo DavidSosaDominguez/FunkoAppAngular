@@ -1,54 +1,41 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FiguresService } from '../../services/figures.service';
-import { FilterService } from '../../services/filter.service';
 import { ProductComponent } from '../product/product.component';
+import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../../funko';
 
 @Component({
   selector: 'app-product-list',
-  standalone: true,
-  imports: [CommonModule, ProductComponent],
+  standalone: true, // 🔥 ¡Lo convertimos en standalone!
+  imports: [CommonModule, ProductComponent], // 🔥 Importamos ProductComponent
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
   filteredFunkos: Funko[] = [];
-  loading = false;
-  errorMessage: string | null = null;
+  loading = true;
+  errorMessage = false;
+  searchTerm: string = '';
 
-  private funkoService = inject(FiguresService);
-  private filterService = inject(FilterService);
+  constructor(private funkoService: FiguresService) {}
 
   ngOnInit(): void {
-
-    this.loadFilteredProducts();
-    this.filterService.filters$.subscribe(() => {
-      this.loadFilteredProducts();
-    });
+    this.loadAllFunkos();
   }
 
-  loadFilteredProducts(): void {
+  private loadAllFunkos(): void {
     this.loading = true;
-    try {
-      const allFunkos = this.funkoService.getAllFunkos();
-      console.log('All Funkos:', allFunkos);
-      const filters = this.filterService.getCurrentFilters();
-      console.log('Filters:', filters);
+    this.errorMessage = false;
 
-      this.filteredFunkos = allFunkos.filter(funko => {
-        const price = Number(funko.price.replace(',', '.'));
-        console.log('Price parsed:', Number(funko.price.replace(',', '.')));
-        return price <= filters.maxPrice &&
-          filters.categories.includes(funko.series);
-      });
-
-      this.errorMessage = null;
-    } catch (error) {
-      this.errorMessage = 'Failed to load products';
-      this.filteredFunkos = [];
-    } finally {
-      this.loading = false;
-    }
+    this.funkoService.getAllFunkos().subscribe({
+      next: (funkos) => {
+        this.filteredFunkos = funkos;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.errorMessage = true;
+      }
+    });
   }
 }
