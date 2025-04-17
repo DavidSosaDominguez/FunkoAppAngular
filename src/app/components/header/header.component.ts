@@ -1,20 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FilterService } from '../../services/filter.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
   standalone: true,
+  imports: [FormsModule], // Añade FormsModule aquí
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private filterService: FilterService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  @Output() searchEvent = new EventEmitter<string>();
+  searchTerm: string = '';
+
+  constructor(
+    private filterService: FilterService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   toggleFilter(): void {
-    this.filterService.toggleVisibility(); // Alterna la visibilidad
+    this.filterService.toggleVisibility();
   }
+
   returnHome(): void {
     this.router.navigate(['']);
+  }
+
+  onSearch(): void {
+    this.searchEvent.emit(this.searchTerm);
+    this.router.navigate([''], {
+      relativeTo: this.activatedRoute,
+      queryParams: { search: this.searchTerm },
+      queryParamsHandling: 'merge'
+    });
   }
 }

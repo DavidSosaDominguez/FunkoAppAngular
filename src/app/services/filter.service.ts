@@ -17,16 +17,11 @@ export class FilterService {
 
   private isVisibleSubject = new BehaviorSubject<boolean>(false);
 
-  filters$ = this.filtersSubject.asObservable();
   isVisible$ = this.isVisibleSubject.asObservable();
 
   updateFilters(newFilters: Partial<Filters>): void {
     const current = this.filtersSubject.value;
     this.filtersSubject.next({ ...current, ...newFilters });
-  }
-
-  getCurrentFilters(): Filters {
-    return this.filtersSubject.value;
   }
 
   toggleVisibility(): void {

@@ -45,7 +45,7 @@ export class FilterBoxComponent {
 
     this.router.navigate([''], {
       queryParams: {
-        price: this.priceValue,
+        maxPrice: this.priceValue,
         categories: Array.from(this.selectedCategories).join(',')
       }
     });

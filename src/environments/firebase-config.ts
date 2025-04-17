@@ -1,6 +1,5 @@
 import { FirebaseOptions } from 'firebase/app';
 
-// CORRECTO - nuevo
 export const firebaseConfig: FirebaseOptions = {
    apiKey: "AIzaSyAmUAjYmfWsAuKx_8bikj30xELCVRqmk58",
     authDomain: "funkostorepwm113.firebaseapp.com",
