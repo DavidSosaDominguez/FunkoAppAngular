@@ -6,4 +6,5 @@ export interface Funko {
   description: string;
   image: string;
   link: string;
+  quantity?: number;
 }

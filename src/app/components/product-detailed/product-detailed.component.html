@@ -18,7 +18,7 @@
         </section>
         <p id="product_description">{{ funko.description }}</p>
         <p id="product_price">{{ funko.price }}€</p>
-        <button type="button" id="buy_button">Añadir al Carrito</button>
+        <button type="button" id="buy_button" (click)="addToCart()">Añadir al Carrito</button>
       </section>
     </article>
   } @else {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../../funko';
-import { CartService } from '../../services/cart.service'; // Importa el servicio del carrito
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-detailed',
@@ -23,7 +23,7 @@ export class ProductDetailedComponent implements OnInit {
     private route: ActivatedRoute,
     private funkoService: FiguresService,
     private router: Router,
-    private cartService: CartService // Inyecta el servicio del carrito
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -72,5 +72,19 @@ export class ProductDetailedComponent implements OnInit {
 
   viewProductDetailed(id: number): void {
     this.router.navigate(['/product-detail', id]);
+  }
+
+  addToCart(): void {
+    if (!this.funko) return;
+
+    this.cartService.addToCart(this.funko);
+
+    const button = document.getElementById('buy_button');
+    if (button) {
+      button.textContent = '✓ Añadido';
+      setTimeout(() => {
+        button.textContent = 'Añadir al Carrito';
+      }, 2000);
+    }
   }
 }
