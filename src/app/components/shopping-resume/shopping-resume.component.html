@@ -1,15 +1,42 @@
-<form class="shopping-resume" *ngIf="isVisible">
-  <fieldset class="product" *ngFor="let product of products">
-    <img [src]="product.image" alt="{{ product.name }}">
-    <article class="product-details">
-      <p class="product-name">{{ product.name }}</p>
-      <p class="product-price">{{ product.price }} €</p>
-      <p class="product-quantity">x {{ product.quantity }} units</p>
+<section class="shopping-resume" *ngIf="isVisible$ | async">
+  <header class="cart-header">
+    <h2>Tu Carrito</h2>
+  </header>
+
+  <main class="cart-items" *ngIf="cartItems$ | async as cartItems">
+    <div *ngIf="cartItems.length === 0" class="empty-cart">
+      <p>Tu carrito está vacío</p>
+    </div>
+
+    <article class="cart-item" *ngFor="let item of cartItems">
+      <img [src]="item.image" [alt]="item.name" class="product-image">
+
+      <section class="product-info">
+        <h3>{{ item.name }}</h3>
+        <p class="price">{{ item.price | currency:'EUR' }}</p>
+      </section>
+
+      <section class="quantity-control">
+        <button (click)="decreaseQuantity(item)" class="quantity-btn">-</button>
+        <input type="number"
+               [value]="item.quantity || 1"
+               (change)="updateQuantityManually(item, $event)"
+               min="1"
+               class="quantity-input">
+        <button (click)="increaseQuantity(item)" class="quantity-btn">+</button>
+      </section>
+
+      <button (click)="removeProduct(item.id)" class="remove-btn">
+        Eliminar
+      </button>
     </article>
-  </fieldset>
-  <fieldset class="total-section">
-    <span class="total-label">TOTAL:</span>
-    <span class="total-price">{{ totalPrice }} €</span>
-    <button type="submit" class="reserve-button">Buy</button>
-  </fieldset>
-</form>
+
+    <footer class="cart-footer" *ngIf="cartItems.length > 0">
+      <section class="total-section">
+        <span>Total:</span>
+        <span class="total-amount">{{ totalAmount$ | async | currency:'EUR' }}</span>
+      </section>
+      <button (click)="reserve()" class="checkout-btn">Proceder al Pago</button>
+    </footer>
+  </main>
+</section>
