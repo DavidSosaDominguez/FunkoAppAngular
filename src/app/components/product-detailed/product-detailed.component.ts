@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiguresService } from '../../services/figures.service';
-import { Funko } from '../../../funko';
+import { Funko } from '../../interfaces/funko';
 import { CartService } from '../../services/cart.service';
 
 @Component({

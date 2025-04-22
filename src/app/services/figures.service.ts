@@ -7,7 +7,7 @@ import {
   where
 } from '@angular/fire/firestore';
 import {map, Observable} from 'rxjs';
-import { Funko } from '../../funko';
+import { Funko } from '../interfaces/funko';
 
 @Injectable({
   providedIn: 'root'

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Funko } from '../../../funko';
+import { Funko } from '../../interfaces/funko';
 
 @Component({
   selector: 'app-shopping-resume',

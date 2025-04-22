@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Funko } from '../../funko';
+import { Funko } from '../interfaces/funko';
 
 @Injectable({
   providedIn: 'root'
