@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductComponent } from '../product/product.component';
 import { FiguresService } from '../../services/figures.service';
-import { Funko } from '../../../funko';
+import { Funko } from '../../interfaces/funko';
 
 @Component({
   selector: 'app-product-list',

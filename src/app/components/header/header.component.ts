@@ -42,4 +42,12 @@ export class HeaderComponent {
       queryParamsHandling: 'merge'
     });
   }
+
+  goToSignUpPage() {
+    this.router.navigate(['/sign-up']);
+  }
+
+  goToSignInPage() {
+    this.router.navigate(['/sign-in']);
+  }
 }
