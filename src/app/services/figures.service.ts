@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Funko} from './funko';
+import {Funko} from '../Interfaces/funko';
 
 @Injectable({
   providedIn: 'root'
@@ -137,10 +137,6 @@ export class FiguresService {
 
   getAllFunkos(): Funko[] {
     return this.ProductDetailedList;
-  }
-
-  getFunkobyId(id: number): Funko | undefined {
-    return this.ProductDetailedList.find((Funko) => Funko.id === id);
   }
 
   submitApplication(name: string, surname: string, email: string, password: string) {

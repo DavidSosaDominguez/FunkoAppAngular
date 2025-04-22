@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FilterService } from '../../services/filter.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import {FiguresService} from '../../services/figures.service';
 
 @Component({
   selector: 'app-header',
@@ -17,4 +18,5 @@ export class HeaderComponent {
   returnHome(): void {
     this.router.navigate(['']);
   }
+
 }

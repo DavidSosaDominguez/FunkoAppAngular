@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Funko} from '../../../funko';
+import {Funko} from '../../Interfaces/funko';
 import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
@@ -12,9 +11,9 @@ import {HttpClient} from '@angular/common/http';
 export class ProductComponent {
   @Input() funko!: Funko;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router) {}
 
-  viewProductDetailled(productId: number) {
+  viewProductDetailed(productId: number) {
     this.router.navigate(['/product-detail', productId]);
   }
 }

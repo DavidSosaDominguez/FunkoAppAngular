@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
-import {Funko} from '../../../funko';
+import {Funko} from '../../Interfaces/funko';
 
 @Component({
   selector: 'app-product-detailled',

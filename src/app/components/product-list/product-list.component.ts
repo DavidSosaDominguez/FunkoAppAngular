@@ -1,10 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import {Funko} from '../../../funko';
+import {Funko} from '../../Interfaces/funko';
 import {ProductComponent} from '../product/product.component';
-import {FiguresService} from '../../../figures.service';
+import {FiguresService} from '../../services/figures.service';
 
 
 @Component({
@@ -22,7 +21,7 @@ export class ProductListComponent implements OnInit {
   funkoService = inject(FiguresService);
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient) {
     this.funkos = this.funkoService.getAllFunkos();
   }
 
@@ -37,9 +36,5 @@ export class ProductListComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-
-  viewProductDetailled(productId: number) {
-    this.router.navigate(['/product-detail', productId]);
   }
 }
