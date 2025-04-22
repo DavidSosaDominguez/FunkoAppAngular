@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router'; // Importa Router
-import { Funko } from '../../../funko';
+import { Funko } from '../../interfaces/funko';
 
 @Component({
   selector: 'app-product',
