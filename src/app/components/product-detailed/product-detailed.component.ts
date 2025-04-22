@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../interfaces/funko';
-import { CartService } from '../../services/cart.service'; // Importa el servicio del carrito
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-detailed',
@@ -73,4 +73,11 @@ export class ProductDetailedComponent implements OnInit {
   viewProductDetailed(id: number): void {
     this.router.navigate(['/product-detail', id]);
   }
+
+  addToCart(): void {
+    if (this.funko) {
+      this.cartService.addToCart(this.funko);
+    }
+  }
 }
+

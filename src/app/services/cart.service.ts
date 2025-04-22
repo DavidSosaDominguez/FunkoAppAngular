@@ -69,8 +69,6 @@ export class CartService {
     sessionStorage.removeItem('funko_cart');
   }
 
-  // ---- API Pública ----
-
   addToCart(funko: Funko): void {
     const currentItems = this.cartItemsSubject.value;
     const existingIndex = currentItems.findIndex(item => item.id === funko.id);
