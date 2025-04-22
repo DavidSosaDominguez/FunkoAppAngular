@@ -59,7 +59,7 @@ export class ProductListComponent implements OnInit {
     const categories = this.route.snapshot.queryParams['categories']?.split(',') || [];
 
     this.filteredFunkos = this.allFunkos.filter(f => {
-      const funkoPrice = parseFloat(f.price.replace(',', '.'));
+      const funkoPrice = f.price;
       const matchesPrice = funkoPrice <= price;
       const matchesCategory = categories.length === 0 ||
         categories.includes(f.series.toUpperCase());

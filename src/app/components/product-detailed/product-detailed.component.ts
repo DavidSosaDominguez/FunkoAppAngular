@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../../funko';
+import { CartService } from '../../services/cart.service'; // Importa el servicio del carrito
 
 @Component({
   selector: 'app-product-detailed',
@@ -21,7 +22,8 @@ export class ProductDetailedComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private funkoService: FiguresService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService // Inyecta el servicio del carrito
   ) {}
 
   ngOnInit(): void {
