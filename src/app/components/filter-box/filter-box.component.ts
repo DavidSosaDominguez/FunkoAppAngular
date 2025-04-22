@@ -1,61 +1,51 @@
-// src/app/components/filter-box/filter-box.component.ts
-import { Component, OnInit } from '@angular/core';
-import { FilterService } from '../../services/filter.service';
-import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-filter-box',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './filter-box.component.html',
-  styleUrls: ['./filter-box.component.css'],
-  imports: [CommonModule]
+  styleUrls: ['./filter-box.component.css']
 })
-export class FilterBoxComponent implements OnInit {
-  isVisible: boolean = false;
-  priceValue: number = 100;
+export class FilterBoxComponent {
+  isVisible = false;
+  priceValue = 100;
 
-  // ✅ Colecciones seleccionables
   categories = ['INVINCIBLE', 'LOL', 'STAR WARS', 'HARRY POTTER'];
-  selectedCategories: Set<string> = new Set(this.categories); // Seleccionados por defecto
+  selectedCategories = new Set<string>(this.categories);
 
-  constructor(
-    private filterService: FilterService,
-    private router: Router
-  ) {
-  }
+  private filterService = inject(FilterService);
+  private router = inject(Router);
 
-  ngOnInit(): void {
-    this.filterService.isVisible$.subscribe((visible) => {
+  constructor() {
+    this.filterService.isVisible$.subscribe(visible => {
       this.isVisible = visible;
     });
   }
 
   onPriceChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.priceValue = Number(input.value);
+    this.priceValue = Number((event.target as HTMLInputElement).value);
   }
 
   onCheckboxChange(event: Event, category: string): void {
     const checkbox = event.target as HTMLInputElement;
-    if (checkbox.checked) {
-      this.selectedCategories.add(category);
-    } else {
-      this.selectedCategories.delete(category);
-    }
+    checkbox.checked
+      ? this.selectedCategories.add(category)
+      : this.selectedCategories.delete(category);
   }
 
   applyFilters(): void {
-    // Aplica los filtros en el servicio
-    this.filterService.applyFilters(
-      this.priceValue,
-      Array.from(this.selectedCategories)
-    );
+    this.filterService.updateFilters({
+      maxPrice: this.priceValue,
+      categories: Array.from(this.selectedCategories)
+    });
 
-    // Redirige a la página principal ('/') con los filtros como parámetros de consulta
     this.router.navigate([''], {
       queryParams: {
-        price: this.priceValue,
+        maxPrice: this.priceValue,
         categories: Array.from(this.selectedCategories).join(',')
       }
     });

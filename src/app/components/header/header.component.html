@@ -6,21 +6,23 @@
     <h1 class="sigmar-one-regular" id="title"><a>Funko Store</a></h1>
   </section>
 
-  <form class="search-container">
-    <button type="button" id="filter-button" (click)="toggleFilter() ">
+  <form class="search-container" (submit)="onSearch(); $event.preventDefault()">
+    <button type="button" id="filter-button" (click)="toggleFilter()">
       <img src="assets/images/filter.png" alt="Filtrar" class="filter-icon">
     </button>
     <label>
-      <input type="text" id="searchInput" placeholder="Buscar figuras...">
+      <input type="text" id="searchInput" placeholder="Buscar figuras..."
+             [(ngModel)]="searchTerm" name="searchTerm">
     </label>
     <button type="submit" id="search-button">
       <img src="assets/images/search.png" alt="buscar" class="search-icon">
     </button>
   </form>
+
   <section class="button-list">
     <a class="signed-out-button" id="sign_up">Sign up</a>
     <a class="signed-out-button" id="sign_in">Sign in</a>
-    <button class="signed-in-button" id="cart-button">
+    <button class="signed-in-button" id="cart-button" (click)="toggleCart()">
       <img src="assets/images/shopping-cart.png" alt="Cart" class="cart-icon">
     </button>
     <a class="signed-in-button" id="log-out-button">

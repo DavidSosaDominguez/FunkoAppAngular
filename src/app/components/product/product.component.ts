@@ -1,19 +1,23 @@
-import {Component, Input} from '@angular/core';
-import {Funko} from '../../Interfaces/funko';
-import {Router} from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; // Importa Router
+import { Funko } from '../../../funko';
 
 @Component({
   selector: 'app-product',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './product.component.html',
-  styleUrl: '../product-list/product-list.component.css'
+  styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
-  @Input() funko!: Funko;
+  @Input({ required: true }) funko!: Funko;
 
   constructor(private router: Router) {}
 
-  viewProductDetailed(productId: number) {
-    this.router.navigate(['/product-detail', productId]);
+  viewProductDetailed(): void {
+    if (this.funko?.id) {
+      this.router.navigate(['/product-detail', this.funko.id]);
+    }
   }
 }

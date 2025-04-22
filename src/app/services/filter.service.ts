@@ -1,34 +1,30 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export interface FilterData {
+interface Filters {
   maxPrice: number;
   categories: string[];
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class FilterService {
-  private filters = new BehaviorSubject<FilterData>({
+  private filtersSubject = new BehaviorSubject<Filters>({
     maxPrice: 100,
-    categories: []
+    categories: ['INVINCIBLE', 'LOL', 'STAR WARS', 'HARRY POTTER']
   });
 
-  filters$ = this.filters.asObservable();
-  constructor() {}
+  private isFilterBoxVisible = new BehaviorSubject<boolean>(false);
 
-  applyFilters(maxPrice: number, categories: string[]): void {
-    this.filters.next({
-      maxPrice,
-      categories
-    });
+  isVisible$ = this.isFilterBoxVisible.asObservable();
+
+  updateFilters(newFilters: Partial<Filters>): void {
+    const current = this.filtersSubject.value;
+    this.filtersSubject.next({ ...current, ...newFilters });
   }
 
-  private visibility = new BehaviorSubject<boolean>(false);
-  isVisible$ = this.visibility.asObservable();
-
   toggleVisibility(): void {
-    this.visibility.next(!this.visibility.value);
+    this.isFilterBoxVisible.next(!this.isFilterBoxVisible.value);
   }
 }
