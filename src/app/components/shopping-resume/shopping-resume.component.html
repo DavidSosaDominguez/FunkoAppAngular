@@ -1,11 +1,11 @@
 <section class="shopping-resume" *ngIf="isVisible$ | async">
   <header class="cart-header">
-    <h2>Tu Carrito</h2>
+    <h2>Your Cart</h2>
   </header>
 
   <main class="cart-items" *ngIf="cartItems$ | async as cartItems">
     <div *ngIf="cartItems.length === 0" class="empty-cart">
-      <p>Tu carrito está vacío</p>
+      <p>Your cart is empty</p>
     </div>
 
     <article class="cart-item" *ngFor="let item of cartItems">

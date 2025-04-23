@@ -18,18 +18,18 @@
         </section>
         <p id="product_description">{{ funko.description }}</p>
         <p id="product_price">{{ funko.price }}€</p>
-        <button type="button" id="buy_button" (click)="addToCart()">Añadir al Carrito</button>
+        <button type="button" id="buy_button" (click)="addToCart()">Add to Cart</button>
       </section>
     </article>
   } @else {
-    <p>Producto no encontrado.</p>
+    <p>Product not found.</p>
   }
 
   <aside>
-    <h2 id="related_products_text">Podría interesarte...</h2>
+    <h2 id="related_products_text">It may interest you...</h2>
 
     @if (loadingRelated) {
-      <p>Cargando productos relacionados...</p>
+      <p>Loading related products...</p>
     } @else if (relatedFunkos.length > 0) {
       <nav id="related_items_container">
         @for (funko of relatedFunkos; track funko.id) {
