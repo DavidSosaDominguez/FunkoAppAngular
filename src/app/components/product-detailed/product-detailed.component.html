@@ -1,0 +1,44 @@
+<main>
+  @if (loading) {
+    <p>Cargando producto...</p>
+  } @else if (error) {
+    <p>Error al cargar el producto</p>
+  } @else if (funko) {
+    <article id="product_display">
+      <section class="product_sections">
+        <figure id="product_image_container">
+          <img id="product_image" [src]="funko.image" [alt]="funko.name" />
+        </figure>
+      </section>
+
+      <section id="product_info" class="product_sections">
+        <section id="product_def_container">
+          <h1 id="product_title">{{ funko.name }}</h1>
+          <h2 id="category_text">{{ funko.series }}</h2>
+        </section>
+        <p id="product_description">{{ funko.description }}</p>
+        <p id="product_price">{{ funko.price }}€</p>
+        <button type="button" id="buy_button" (click)="addToCart()">Add to Cart</button>
+      </section>
+    </article>
+  } @else {
+    <p>Product not found.</p>
+  }
+
+  <aside>
+    <h2 id="related_products_text">It may interest you...</h2>
+
+    @if (loadingRelated) {
+      <p>Loading related products...</p>
+    } @else if (relatedFunkos.length > 0) {
+      <nav id="related_items_container">
+        @for (funko of relatedFunkos; track funko.id) {
+          <section class="related_product_item" (click)="viewProductDetailed(funko.id)">
+            <img class="related_images" [src]="funko.image" [alt]="funko.name" />
+            <p class="related_products_text">{{ funko.name }}</p>
+          </section>
+        }
+      </nav>
+    }
+  </aside>
+</main>
