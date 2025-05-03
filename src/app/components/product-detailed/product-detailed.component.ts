@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../interfaces/funko';
 import { CartService } from '../../services/cart.service';
+import {AuthServiceService} from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-product-detailed',
@@ -18,6 +19,7 @@ export class ProductDetailedComponent implements OnInit {
   loading = true;
   error = false;
   loadingRelated = false;
+  authService = inject(AuthServiceService);
 
   constructor(
     private route: ActivatedRoute,
@@ -78,6 +80,10 @@ export class ProductDetailedComponent implements OnInit {
     if (this.funko) {
       this.cartService.addToCart(this.funko);
     }
+  }
+
+  goToSignIn() {
+    this.router.navigate(['/sign-in']);
   }
 }
 

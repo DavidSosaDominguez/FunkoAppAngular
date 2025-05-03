@@ -20,13 +20,18 @@
   </form>
 
   <section class="button-list">
-    <a class="signed-out-button" id="sign_up" (click)="goToSignUpPage()">Sign up</a>
-    <a class="signed-out-button" id="sign_in" (click)="goToSignInPage()">Sign in</a>
-    <button class="signed-in-button" id="cart-button" (click)="toggleCart()">
-      <img src="assets/images/shopping-cart.png" alt="Cart" class="cart-icon">
-    </button>
-    <a class="signed-in-button" id="log-out-button">
-      <img src="assets/images/log-out.png" alt="Log out" class="logout-icon">
-    </a>
+    @if (this.authService.currentUserSign() == null) {
+      <a class="signed-out-button" id="sign_up" (click)="goToSignUpPage()">Sign up</a>
+      <a class="signed-out-button" id="sign_in" (click)="goToSignInPage()">Sign in</a>
+    }
+    @if (this.authService.currentUserSign()) {
+      <button class="signed-in-button" id="cart-button" (click)="toggleCart()">
+        <img src="assets/images/shopping-cart.png" alt="Cart" class="cart-icon">
+      </button>
+      <a class="signed-in-button" id="log-out-button" (click)="logout()">
+        <img src="assets/images/log-out.png" alt="Log out" class="logout-icon">
+      </a>
+    }
+
   </section>
 </header>

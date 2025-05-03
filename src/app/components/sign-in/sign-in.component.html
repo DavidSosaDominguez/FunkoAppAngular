@@ -1,9 +1,9 @@
 <main>
   <article id="register_box">
     <h1 id="register_text">Sign In</h1>
-    <form class="input_form" id="login_form">
-      <input id="email" type="email" placeholder="Email*" name="email" required/>
-      <input id="password" type="password" placeholder="Password*" name="password" required minlength="8"/>
+    <form class="input_form" id="login_form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input id="email" type="email" placeholder="Email*" formControlName="email"/>
+      <input id="password" type="password" placeholder="Password*" formControlName="password"/>
       <button type="submit" id="submit_button">Submit</button>
     </form>
   </article>

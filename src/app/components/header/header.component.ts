@@ -1,8 +1,9 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter, inject} from '@angular/core';
 import { FilterService } from '../../services/filter.service';
 import { CartService } from '../../services/cart.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {AuthServiceService} from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class HeaderComponent {
   @Output() searchEvent = new EventEmitter<string>();
   searchTerm: string = '';
+  authService = inject(AuthServiceService);
 
   constructor(
     private filterService: FilterService,
@@ -49,5 +51,21 @@ export class HeaderComponent {
 
   goToSignInPage() {
     this.router.navigate(['/sign-in']);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+  ngOnInit() {
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.authService.currentUserSign.set({
+          email: user.email!,
+          username: user.displayName!
+        })
+      } else {
+        this.authService.currentUserSign.set(null);
+      }
+    })
   }
 }

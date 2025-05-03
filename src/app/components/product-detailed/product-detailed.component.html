@@ -18,7 +18,11 @@
         </section>
         <p id="product_description">{{ funko.description }}</p>
         <p id="product_price">{{ funko.price }}€</p>
-        <button type="button" id="buy_button" (click)="addToCart()">Add to Cart</button>
+        @if (this.authService.currentUserSign()) {
+          <button type="button" id="buy_button" (click)="addToCart()">Add to Cart</button>
+        } @else {
+          <button type="button" id="buy_button" (click)="goToSignIn()">Add to Cart</button>
+        }
       </section>
     </article>
   } @else {
