@@ -2,6 +2,8 @@ import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthServiceService} from '../../services/auth-service.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {SignInErrorComponent} from '../sign-in-error/sign-in-error.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -17,7 +19,8 @@ export class SignInComponent {
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
-  })
+  });
+  modalService = inject(NgbModal);
 
   constructor(private router: Router) {
   }
@@ -32,8 +35,11 @@ export class SignInComponent {
       next: () => {
         this.router.navigate(['/']);
       },
-      error: (err) => {
-        console.log(err);
+      error: () => {
+        this.modalService.open(SignInErrorComponent, {
+          size: 'lg',
+          centered: true,
+        })
       }
 
     });

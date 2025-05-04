@@ -1,8 +1,9 @@
 import {Component, inject} from '@angular/core';
 import {AuthServiceService} from '../../services/auth-service.service';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {from, Observable} from 'rxjs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {LogInErrorComponent} from '../log-in-error/log-in-error.component';
 
 
 @Component({
@@ -24,10 +25,11 @@ export class SignUpComponent {
     email: ['', Validators.required, Validators.email],
     password: ['', Validators.required, Validators.minLength(6)],
   });
-  modal = inject(NgbModal);
+  modalService = inject(NgbModal);
 
   onSubmit() {
     const rawForm = this.form.getRawValue();
+
     this.authService.register(
       rawForm.name,
       rawForm.surname,
@@ -36,8 +38,11 @@ export class SignUpComponent {
       next: () => {
         this.router.navigate(['/']);
       },
-      error: err => {
-        console.log(err);
+      error: () => {
+        this.modalService.open(LogInErrorComponent, {
+          size: 'lg',
+          centered: true
+        })
       }
     })
   }

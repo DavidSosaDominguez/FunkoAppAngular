@@ -7,7 +7,10 @@ import {
   user
 } from '@angular/fire/auth';
 import {from, Observable} from 'rxjs';
-import {User} from '../interfaces/user';
+import {UsersService} from './users.service';
+import {DataBaseUser, User} from '../interfaces/user';
+
+
 
 
 @Injectable({
@@ -15,29 +18,44 @@ import {User} from '../interfaces/user';
 })
 export class AuthServiceService {
 
-  firebaseAtuh = inject(Auth);
-  user$ = user(this.firebaseAtuh);
+  firebaseAuth = inject(Auth);
+  user$ = user(this.firebaseAuth);
   currentUserSign = signal<User|null|undefined>(undefined);
+  usersService = inject(UsersService);
 
-  register(name: string, surname: string, email: string, password: string): Observable<void> {
-    const promise = createUserWithEmailAndPassword(
-      this.firebaseAtuh,
-      email,
-      password).then(response=>{
-        updateProfile(response.user, {displayName: name});
-    });
-    return from(promise);
+  register(name:string, surname: string, email: string, password: string): Observable<void> {
+    return from(this.registerUser(name, surname, email, password));
+  }
+
+  async registerUser(name: string, surname: string, email: string, password: string) {
+    try {
+      const response = await createUserWithEmailAndPassword(this.firebaseAuth, email, password);
+
+      await updateProfile(response.user, {displayName: name});
+
+      const user: DataBaseUser = {
+        email: email,
+        name: name,
+        surname: surname
+      };
+
+      await this.usersService.addUser(user);
+
+    } catch (error) {
+      console.error('Error durante el registro de usuario:', error);
+      throw error;
+    }
   }
 
   login(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(this.firebaseAtuh,
+    const promise = signInWithEmailAndPassword(this.firebaseAuth,
       email,
       password).then(()=>{});
     return from(promise);
   }
 
   logout(): Observable<void> {
-    const promise = signOut(this.firebaseAtuh);
+    const promise = signOut(this.firebaseAuth);
     this.currentUserSign.set(null);
     return from(promise);
   }

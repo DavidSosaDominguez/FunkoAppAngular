@@ -1,0 +1,23 @@
+#close {
+  background-color: #FF3B7D;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 5px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+h1 {
+  color: black;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h4 {
+  color: black;
+  margin: 5px;
+  text-align: center;
+}
