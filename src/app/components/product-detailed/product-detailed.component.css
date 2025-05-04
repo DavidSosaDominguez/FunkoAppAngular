@@ -14,8 +14,8 @@ main {
   flex-direction: row;
   justify-content: center;
   width: 70%;
-  height: 90vw;
-  max-height: 405px;
+  height: 30vw;
+  max-height: 500px;
   margin: auto;
   container-type: inline-size;
 }
@@ -64,6 +64,8 @@ main {
 #buy_button {
   width: 200px;
   height: 40px;
+  min-height: 30px;
+  min-width: 100px;
   border-radius: 30px;
   font-family: serif;
   font-size: 1.3rem;
@@ -71,7 +73,6 @@ main {
   background-color: #191970 ;
   color: white;
   border: none;
-  padding: 10px;
   margin-bottom: 40px;
   text-decoration: none;
   text-align: center;
@@ -80,7 +81,7 @@ main {
 #product_description {
   width: 70%;
   text-align: justify;
-  font-size: 1em;
+  font-size: 1vw;
   color: #333;
   margin-bottom: 20px;
 }
@@ -97,6 +98,7 @@ main {
 .related_images {
   width: 150px;
   margin: auto;
+  cursor: pointer;
 }
 
 aside {
@@ -115,9 +117,10 @@ aside {
 
 nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5vw;
+  margin-left: 15px;
 }
 
 #category_text {
@@ -130,12 +133,12 @@ nav {
   font-style: italic;
   color: #d6336c;
   font-size: 2em;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-bottom: 10px;
 
 }
 
-@container (width < 355px) {
+@container (width < 420px) {
   #product_description {
     display: none;
     margin-bottom: 0;
@@ -145,7 +148,7 @@ nav {
   }
   #buy_button {
     width: 170px;
-    height: 40px;
+    /*height: 40px;*/
   }
   #product_price {
     font-size: 18px;
@@ -153,15 +156,19 @@ nav {
 }
 
 @container (width < 250px) {
-  #product_title {
+  /*#product_title {
     font-size: 8vw;
-  }
+  }*/
   #buy_button {
     width: 30vw;
     font-size: 3.6vw;
   }
   #category_text {
     font-size: 3vw;
+  }
+
+  #product_title {
+    font-size: 20px;
   }
 
 }
