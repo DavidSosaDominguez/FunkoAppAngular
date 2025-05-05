@@ -47,6 +47,11 @@
   font-weight: bold;
   text-align: right;
 }
+#price_units{
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
 
 @media (max-width: 600px) {
   .product_info {
@@ -71,5 +76,8 @@
   .product_name,
   .product_description {
     text-align: center;
+  }
+  #price_units{
+    margin-left: 0;
   }
 }

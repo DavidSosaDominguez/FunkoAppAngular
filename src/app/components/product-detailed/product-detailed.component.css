@@ -31,6 +31,10 @@ main {
   justify-content: center;
   align-items: center;
   height: 100%;
+  flex-direction: column;
+}
+#product_quantity{
+  margin-top: 20px;
 }
 
 #product_image {
@@ -93,10 +97,11 @@ main {
   gap:5px;
   padding: 10px;
   border: 1px solid darkgrey;
+  width: 35%;
 }
 
 .related_images {
-  width: 150px;
+  width: 35%;
   margin: auto;
   cursor: pointer;
 }
