@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LogInErrorComponent } from './log-in-error.component';
+import { UserOptionsComponent } from './user-options.component';
 
-describe('LogInErrorComponent', () => {
-  let component: LogInErrorComponent;
-  let fixture: ComponentFixture<LogInErrorComponent>;
+describe('UserOptionsComponent', () => {
+  let component: UserOptionsComponent;
+  let fixture: ComponentFixture<UserOptionsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LogInErrorComponent]
+      imports: [UserOptionsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LogInErrorComponent);
+    fixture = TestBed.createComponent(UserOptionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

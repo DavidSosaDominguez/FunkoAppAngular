@@ -20,18 +20,20 @@
   </form>
 
   <section class="button-list">
-    @if (this.authService.currentUserSign() == null) {
+    <ng-container *ngIf="authService.currentUserSign() == null">
       <a class="signed-out-button" id="sign_up" (click)="goToSignUpPage()">Sign up</a>
       <a class="signed-out-button" id="sign_in" (click)="goToSignInPage()">Sign in</a>
-    }
-    @if (this.authService.currentUserSign()) {
+    </ng-container>
+    <ng-container *ngIf="authService.currentUserSign()">
+      <section class="dropdown-container">
+        <a class="signed-in-button" id="user-options-button" (click)="toggleProfileDropdown()">
+          <img src="assets/images/profile.png" alt="Opciones de usuario" class="profile-icon">
+        </a>
+        <app-profile-dropdown *ngIf="profileDropdownService.isVisible$ | async"></app-profile-dropdown>
+      </section>
       <button class="signed-in-button" id="cart-button" (click)="toggleCart()">
         <img src="assets/images/shopping-cart.png" alt="Cart" class="cart-icon">
       </button>
-      <a class="signed-in-button" id="log-out-button" (click)="logout()">
-        <img src="assets/images/log-out.png" alt="Log out" class="logout-icon">
-      </a>
-    }
-
+    </ng-container>
   </section>
 </header>

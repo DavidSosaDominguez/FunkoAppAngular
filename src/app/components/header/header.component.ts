@@ -1,28 +1,41 @@
-import {Component, Output, EventEmitter, inject} from '@angular/core';
-import { FilterService } from '../../services/filter.service';
-import { CartService } from '../../services/cart.service';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {AuthServiceService} from '../../services/auth-service.service';
+import { AuthServiceService } from '../../services/auth-service.service';
+import { ProfileDropdownService } from '../../services/profile-dropdown.service';
+import { FilterService } from '../../services/filter.service';
+import { CartService } from '../../services/cart.service';
+import { ProfileDropdownComponent } from '../profile-dropdown/profile-dropdown.component';
+import { AsyncPipe, NgIf } from '@angular/common';  // Asegúrate de importar AsyncPipe y NgIf
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [FormsModule], // Añade FormsModule aquí
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  imports: [FormsModule, AsyncPipe, NgIf, ProfileDropdownComponent]
 })
+
 export class HeaderComponent {
   @Output() searchEvent = new EventEmitter<string>();
   searchTerm: string = '';
-  authService = inject(AuthServiceService);
 
+  // Hacemos públicas las propiedades
+  public authService: AuthServiceService;
+  public profileDropdownService: ProfileDropdownService;
+
+  // Inyectamos los servicios a través del constructor
   constructor(
     private filterService: FilterService,
     private cartService: CartService,
+    authService: AuthServiceService,  // Inyección
+    profileDropdownService: ProfileDropdownService,  // Inyección
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    this.authService = authService;  // Asignación
+    this.profileDropdownService = profileDropdownService;  // Asignación
+  }
 
   toggleFilter(): void {
     this.filterService.toggleVisibility();
@@ -30,6 +43,10 @@ export class HeaderComponent {
 
   toggleCart(): void {
     this.cartService.toggleVisibility();
+  }
+
+  toggleProfileDropdown(): void {
+    this.profileDropdownService.toggleVisibility();
   }
 
   returnHome(): void {
@@ -56,6 +73,7 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
   }
+
   ngOnInit() {
     this.authService.user$.subscribe(user => {
       if (user) {
@@ -66,6 +84,6 @@ export class HeaderComponent {
       } else {
         this.authService.currentUserSign.set(null);
       }
-    })
+    });
   }
 }
