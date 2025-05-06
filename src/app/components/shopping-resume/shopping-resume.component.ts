@@ -55,9 +55,7 @@ export class ShoppingResumeComponent {
   }
 
   reserve(): void {
-    this.cartService.clearCart();
-    this.router.navigate(['/checkout']); // Redirige a página de checkout
-    // Opcional: Puedes implementar lógica adicional de reserva aquí
+    this.cartService.buy();
   }
 
   closeCart(): void {

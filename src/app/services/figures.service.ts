@@ -4,9 +4,12 @@ import {
   collection,
   collectionData,
   query,
-  where
+  where, doc,
+  updateDoc,
+  setDoc,
+  docData
 } from '@angular/fire/firestore';
-import {map, Observable} from 'rxjs';
+import {firstValueFrom, map, Observable} from 'rxjs';
 import { Funko } from '../interfaces/funko';
 
 @Injectable({
@@ -29,5 +32,21 @@ export class FiguresService {
   getFunkosBySeries(series: string): Observable<Funko[]> {
     const q = query(this.productsCollection, where('series', '==', series));
     return collectionData(q) as Observable<Funko[]>;
+  }
+
+  updateFunko(funko: Funko) {
+    const funkoRef = doc(this.firestore, `products/${funko.id}`);
+    return setDoc(funkoRef, funko);
+  }
+
+  async modifyQuantity(funko: Funko) {
+    const funkoRef = doc(this.firestore, `products/${funko.id}`);
+    const current = await firstValueFrom(docData(funkoRef, { idField: 'id' }) as Observable<Funko>);
+
+    const newQty = current.quantity! - funko.quantity!;
+    if (newQty < 0) throw new Error(`No hay suficiente stock para ${funko.name}`);
+
+    return updateDoc(funkoRef, { quantity: newQty });
+
   }
 }
