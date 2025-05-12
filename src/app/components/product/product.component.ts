@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router'; // Importa Router
 import { Funko } from '../../interfaces/funko';
+import { FavoriteService } from '../../services/favorite.service';
+import { AuthServiceService} from '../../services/auth-service.service';
+
 
 @Component({
   selector: 'app-product',
@@ -13,7 +16,15 @@ import { Funko } from '../../interfaces/funko';
 export class ProductComponent {
   @Input({ required: true }) funko!: Funko;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private favoriteService: FavoriteService, public authService: AuthServiceService) {}
+
+  isFavorite(): boolean {
+    return this.favoriteService.isFavorite(this.funko.id);
+  }
+
+  toggleFavorite(): void {
+    this.favoriteService.toggleFavorite(this.funko.id);
+  }
 
   viewProductDetailed(): void {
     if (this.funko?.id) {

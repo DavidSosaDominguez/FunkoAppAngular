@@ -13,8 +13,13 @@
 
       <section id="product_info" class="product_sections">
         <section id="product_def_container">
-          <h1 id="product_title">{{ funko.name }}</h1>
-          <h2 id="category_text">{{ funko.series }}</h2>
+          <section class="title_and_favorite">
+            <h1 id="product_title">{{funko.name}}</h1>
+            <button class="toggle-favorite_button" (click)="toggleFavorite()">
+              <img [src]="isFavorite() ? 'assets/images/favorite.png' : 'assets/images/not-favorite.png'" alt="Toggle favorite" />
+            </button>
+          </section>
+          <h2 id="category_text">{{funko.series}}</h2>
         </section>
         <p id="product_description">{{ funko.description }}</p>
         <p id="product_price">{{ funko.price }}€</p>
