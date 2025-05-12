@@ -80,6 +80,7 @@ export class ProductDetailedComponent implements OnInit {
     if (this.funko) {
       this.cartService.addToCart(this.funko);
     }
+    this.cartService.toggleVisibility(true);
   }
 
   goToSignIn() {
