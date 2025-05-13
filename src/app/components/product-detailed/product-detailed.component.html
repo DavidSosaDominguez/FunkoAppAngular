@@ -15,9 +15,11 @@
         <section id="product_def_container">
           <section class="title_and_favorite">
             <h1 id="product_title">{{funko.name}}</h1>
-            <button class="toggle-favorite_button" (click)="toggleFavorite()">
-              <img [src]="isFavorite() ? 'assets/images/favorite.png' : 'assets/images/not-favorite.png'" alt="Toggle favorite" />
-            </button>
+            <ng-container *ngIf="this.authService.currentUserSign()">
+              <button class="toggle-favorite_button" (click)="toggleFavorite()">
+                <img [src]="isFavorite() ? 'assets/images/favorite.png' : 'assets/images/not-favorite.png'" alt="Toggle favorite" />
+              </button>
+            </ng-container>
           </section>
           <h2 id="category_text">{{funko.series}}</h2>
         </section>
