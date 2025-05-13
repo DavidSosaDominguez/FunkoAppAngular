@@ -4,12 +4,10 @@ import {
   collection,
   Firestore,
   CollectionReference,
-  DocumentReference,
-  doc,
-  docData, query, where, getDocs
+  query, where, getDocs
 } from '@angular/fire/firestore';
 import {DataBaseUser} from '../interfaces/user';
-import {from, map, Observable} from 'rxjs';
+import {from, map} from 'rxjs';
 
 
 
