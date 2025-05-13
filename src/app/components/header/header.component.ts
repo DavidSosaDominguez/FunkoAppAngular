@@ -57,7 +57,7 @@ export class HeaderComponent {
     this.searchEvent.emit(this.searchTerm);
     this.router.navigate([''], {
       relativeTo: this.activatedRoute,
-      queryParams: { search: this.searchTerm },
+      queryParams: {search: this.searchTerm},
       queryParamsHandling: 'merge'
     });
   }
@@ -72,18 +72,5 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout();
-  }
-
-  ngOnInit() {
-    this.authService.user$.subscribe(user => {
-      if (user) {
-        this.authService.currentUserSign.set({
-          email: user.email!,
-          username: user.displayName!
-        })
-      } else {
-        this.authService.currentUserSign.set(null);
-      }
-    });
   }
 }

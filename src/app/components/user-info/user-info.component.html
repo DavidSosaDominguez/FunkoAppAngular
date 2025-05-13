@@ -1,0 +1,86 @@
+<!--
+<main id="main-container">
+  <h1 id="profile-greeting">HELLO! <span id="greeting-username">username</span></h1>
+  <form id="user-form">
+    <article id="user-input-container">
+      <section id="picture-selector" class="form-container">
+        <img id="user-picture" src="assets/images/profile.png" alt="user picture"/>
+        <input
+          type="file"
+          id="select-picture-input"
+          name="profilePicture"
+          accept="image/*"
+          hidden
+        />
+        <button type="button" id="select-picture-button" class="user-button" onclick="document.getElementById('select-picture-input').click();">
+          Select profile picture from PC
+        </button>
+      </section>
+
+      <section id="text-values" class="form-container">
+        <label class="form-label">
+          Email<br>
+          <input type="email" id="user-email" name="email" value="current-value" class="user-form-input" />
+        </label>
+
+        <label class="form-label">
+          Name<br>
+          <input type="text" id="user-name" name="name" value="current-value" class="user-form-input"/>
+        </label>
+
+        <label class="form-label">
+          Surname<br>
+          <input type="text" id="user-surname" name="surname" value="current-value" class="user-form-input"/>
+        </label>
+
+      </section>
+    </article>
+
+    <button type="submit" id="submit-user-form" class="user-button">Submit</button>
+  </form>
+</main>
+-->
+
+<main class="main-container">
+  <article class="user-info-container">
+
+    <form>
+      <section class="user-picture-name">
+
+        <span class="profile-picture-wrapper">
+          <img class="user-image" src="assets/images/profile.png" alt="user picture"/>
+          <button class="edit-icon" type="button" onclick="document.getElementById('select-picture-input').click();">✎</button>
+          <input type="file" accept="image/*" id="select-picture-input" name="profile-picture" hidden>
+        </span>
+
+        <span class="user-name-email">
+          <h2 class="user-name">
+            current user name
+          </h2>
+          <h3 class="user-email">
+            currentuser&#64;gmail.com
+          </h3>
+        </span>
+
+      </section>
+
+     <hr class="separation-bar">
+
+      <section class="text-section" id="name-section">
+        <h2 class="section-name">Name</h2>
+        <input type="text" value="current-value" name="profile-name" id="select-profile-name" class="section-input"/>
+      </section>
+
+      <hr class="separation-bar">
+
+      <section class="text-section">
+        <h2 class="section-name">Surname</h2>
+        <input type="text" value="current-value" name="profile-surname" id="select-profile-surname" class="section-input"/>
+      </section>
+
+      <hr class="separation-bar">
+
+      <button class="submit-profile-form" type="submit">Save changes</button>
+    </form>
+  </article>
+</main>
