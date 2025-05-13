@@ -11,16 +11,12 @@ import {
 } from '@angular/fire/firestore';
 import {firstValueFrom, map, Observable} from 'rxjs';
 import { Funko } from '../interfaces/funko';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {BuyErrorComponent} from '../components/buy-error/buy-error.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FiguresService {
   private firestore = inject(Firestore);
-  modalService = inject(NgbModal);
-
   private productsCollection = collection(this.firestore, 'products');
 
   getAllFunkos(): Observable<Funko[]> {
@@ -48,13 +44,7 @@ export class FiguresService {
     const current = await firstValueFrom(docData(funkoRef, { idField: 'id' }) as Observable<Funko>);
 
     const newQty = current.quantity! - funko.quantity!;
-    if (newQty < 0) {
-      this.modalService.open(BuyErrorComponent, {
-        size: 'lg',
-        centered: true,
-      })
-      return;
-    }
+    if (newQty < 0) throw new Error(`No hay suficiente stock para ${funko.name}`);
 
     return updateDoc(funkoRef, { quantity: newQty });
 
