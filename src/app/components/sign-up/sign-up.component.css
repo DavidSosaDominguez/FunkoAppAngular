@@ -115,3 +115,35 @@ main {
     width: 75%;
   }
 }
+.profile-picture-wrapper {
+  margin: 20px;
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+}
+
+.user-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: #d6336c;
+  color: white;
+  border: none;
+  border-radius: 50%; /* Cambiado de 100% a 50% para asegurar que sea circular */
+  width: 30px; /* Tamaño del botón */
+  height: 30px; /* Tamaño del botón */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; /* Asegurando que no haya padding extra */
+  font-size: 16px; /* Tamaño del icono */
+  cursor: pointer;
+}
