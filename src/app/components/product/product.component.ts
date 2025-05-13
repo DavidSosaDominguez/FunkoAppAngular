@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router'; // Importa Router
 import { Funko } from '../../interfaces/funko';
 import { FavoriteService } from '../../services/favorite.service';
-import { AuthServiceService} from '../../services/auth-service.service';
+import { AuthService} from '../../services/auth.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ import { AuthServiceService} from '../../services/auth-service.service';
 export class ProductComponent {
   @Input({ required: true }) funko!: Funko;
 
-  constructor(private router: Router, private favoriteService: FavoriteService, public authService: AuthServiceService) {}
+  constructor(private router: Router, private favoriteService: FavoriteService, public authService: AuthService) {}
 
   isFavorite(): boolean {
     return this.favoriteService.isFavorite(this.funko.id);

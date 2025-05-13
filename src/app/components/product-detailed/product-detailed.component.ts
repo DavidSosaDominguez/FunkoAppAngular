@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../interfaces/funko';
 import { CartService } from '../../services/cart.service';
-import { AuthServiceService } from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
 import { FavoriteService } from '../../services/favorite.service'; // Asegúrate de que la ruta sea correcta
 
 @Component({
@@ -20,7 +20,7 @@ export class ProductDetailedComponent implements OnInit {
   loading = true;
   error = false;
   loadingRelated = false;
-  authService = inject(AuthServiceService);
+  authService = inject(AuthService);
 
   constructor(
     private route: ActivatedRoute,

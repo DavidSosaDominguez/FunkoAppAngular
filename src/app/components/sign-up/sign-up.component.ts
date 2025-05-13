@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AuthServiceService } from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +15,7 @@ import { LogInErrorComponent } from '../log-in-error/log-in-error.component';
 })
 export class SignUpComponent {
   router = inject(Router);
-  authService = inject(AuthServiceService);
+  authService = inject(AuthService);
   fb = inject(FormBuilder);
   modalService = inject(NgbModal);
 

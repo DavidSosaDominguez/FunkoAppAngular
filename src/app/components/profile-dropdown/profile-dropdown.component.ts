@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
 import { ProfileDropdownService } from '../../services/profile-dropdown.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ProfileDropdownService } from '../../services/profile-dropdown.service'
 })
 
 export class ProfileDropdownComponent {
-  private authService = inject(AuthServiceService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   public dropdownService = inject(ProfileDropdownService);
 

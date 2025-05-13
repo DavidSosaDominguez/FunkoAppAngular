@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthServiceService} from '../../services/auth-service.service';
+import {AuthService} from '../../services/auth.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SignInErrorComponent} from '../sign-in-error/sign-in-error.component';
@@ -14,7 +14,7 @@ import {SignInErrorComponent} from '../sign-in-error/sign-in-error.component';
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
-  authService = inject(AuthServiceService);
+  authService = inject(AuthService);
   fb = inject(FormBuilder);
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],

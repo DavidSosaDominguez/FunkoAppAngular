@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthServiceService } from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
 import { ProfileDropdownService } from '../../services/profile-dropdown.service';
 import { FilterService } from '../../services/filter.service';
 import { CartService } from '../../services/cart.service';
@@ -21,14 +21,14 @@ export class HeaderComponent {
   searchTerm: string = '';
 
   // Hacemos públicas las propiedades
-  public authService: AuthServiceService;
+  public authService: AuthService;
   public profileDropdownService: ProfileDropdownService;
 
   // Inyectamos los servicios a través del constructor
   constructor(
     private filterService: FilterService,
     private cartService: CartService,
-    authService: AuthServiceService,  // Inyección
+    authService: AuthService,  // Inyección
     profileDropdownService: ProfileDropdownService,  // Inyección
     private router: Router,
     private activatedRoute: ActivatedRoute

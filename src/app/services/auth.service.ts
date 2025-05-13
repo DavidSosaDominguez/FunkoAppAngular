@@ -16,7 +16,7 @@ import {DataBaseUser, User} from '../interfaces/user';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
+export class AuthService {
 
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
