@@ -6,11 +6,9 @@ import {
   CollectionReference,
   DocumentReference,
   doc,
-  setDoc,
-  getDoc, docData
+  docData, query, where, getDocs
 } from '@angular/fire/firestore';
 import {DataBaseUser} from '../interfaces/user';
-import {user} from '@angular/fire/auth';
 import {from, map, Observable} from 'rxjs';
 
 
@@ -28,7 +26,18 @@ export class UsersService {
   }
 
   getUser(email: string){
-    const userRef = doc(this.firestore, `users/${email}`) as DocumentReference<DataBaseUser>;
-    return docData(userRef) as Observable<DataBaseUser|null>;
+    const usersRef = collection(this.firestore, 'users');
+    const q = query(usersRef, where('email' ,'==', email));
+
+    return from(getDocs(q)).pipe(
+      map(snapshot => {
+        if(snapshot.empty) {
+          return null;
+        }else {
+          const data = snapshot.docs[0].data();
+          return data as DataBaseUser;
+        }
+      })
+    )
   }
 }

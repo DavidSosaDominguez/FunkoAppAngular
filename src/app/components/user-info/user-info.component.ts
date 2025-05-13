@@ -1,6 +1,6 @@
-import {Component, OnInit, Inject, inject, Signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AuthServiceService} from '../../services/auth-service.service';
+import {AuthService} from '../../services/auth.service';
 import {DataBaseUser} from '../../interfaces/user';
 
 @Component({
@@ -11,13 +11,9 @@ import {DataBaseUser} from '../../interfaces/user';
   standalone: true
 })
 export class UserInfoComponent {
-  auth = inject(AuthServiceService)
+  auth = inject(AuthService)
   user: DataBaseUser|null = null;
   constructor() {
-
-  }
-
-  ngOnInit() {
 
   }
 }
