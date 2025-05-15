@@ -1,0 +1,7 @@
+{
+  "name": "FunkoAppIonic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
