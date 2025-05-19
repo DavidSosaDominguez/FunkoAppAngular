@@ -189,3 +189,27 @@ nav {
     width: 47vw;
   }
 }
+
+.toggle-favorite_button {
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.toggle-favorite_button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.title_and_favorite {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}

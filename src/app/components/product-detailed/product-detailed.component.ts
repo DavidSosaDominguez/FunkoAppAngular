@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../interfaces/funko';
 import { CartService } from '../../services/cart.service';
-import {AuthServiceService} from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
+import { FavoriteService } from '../../services/favorite.service'; // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'app-product-detailed',
@@ -19,13 +20,14 @@ export class ProductDetailedComponent implements OnInit {
   loading = true;
   error = false;
   loadingRelated = false;
-  authService = inject(AuthServiceService);
+  authService = inject(AuthService);
 
   constructor(
     private route: ActivatedRoute,
     private funkoService: FiguresService,
     private router: Router,
-    private cartService: CartService // Inyecta el servicio del carrito
+    private cartService: CartService, // Inyecta el servicio del carrito
+    private favoriteService: FavoriteService,
   ) {}
 
   ngOnInit(): void {
@@ -85,5 +87,16 @@ export class ProductDetailedComponent implements OnInit {
   goToSignIn() {
     this.router.navigate(['/sign-in']);
   }
+
+  isFavorite(): boolean {
+    return this.funko ? this.favoriteService.isFavorite(this.funko.id) : false;
+  }
+
+  toggleFavorite(): void {
+    if (this.funko) {
+      this.favoriteService.toggleFavorite(this.funko.id);
+    }
+  }
+
 }
 
