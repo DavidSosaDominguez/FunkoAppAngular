@@ -59,8 +59,4 @@ export class ShoppingResumeComponent {
     this.router.navigate(['/checkout']); // Redirige a página de checkout
     // Opcional: Puedes implementar lógica adicional de reserva aquí
   }
-
-  closeCart(): void {
-    this.cartService.toggleVisibility();
-  }
 }

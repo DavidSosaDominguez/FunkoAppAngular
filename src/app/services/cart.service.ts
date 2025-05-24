@@ -124,6 +124,10 @@ export class CartService {
     }
   }
 
+  hide(): void {
+    this.isCartVisibleSubject.next(false);
+  }
+
   // Métodos útiles para el checkout
   getCartSummary() {
     const items = this.cartItemsSubject.value;
