@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -6,7 +6,9 @@ import { ProfileDropdownService } from '../../services/profile-dropdown.service'
 import { FilterService } from '../../services/filter.service';
 import { CartService } from '../../services/cart.service';
 import { ProfileDropdownComponent } from '../profile-dropdown/profile-dropdown.component';
-import { AsyncPipe, NgIf } from '@angular/common';  // Asegúrate de importar AsyncPipe y NgIf
+import { AsyncPipe, NgIf } from '@angular/common';
+import {User} from '@angular/fire/auth';
+import {Subscription} from 'rxjs';  // Asegúrate de importar AsyncPipe y NgIf
 
 @Component({
   selector: 'app-header',
@@ -16,7 +18,7 @@ import { AsyncPipe, NgIf } from '@angular/common';  // Asegúrate de importar As
   imports: [FormsModule, AsyncPipe, NgIf, ProfileDropdownComponent]
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy{
   @Output() searchEvent = new EventEmitter<string>();
   searchTerm: string = '';
 
@@ -36,6 +38,11 @@ export class HeaderComponent {
     this.authService = authService;  // Asignación
     this.profileDropdownService = profileDropdownService;  // Asignación
   }
+
+  currentUser: User|null = null;
+  private userSub?: Subscription;
+
+  profileImageURL: string = '';
 
   toggleFilter(): void {
     this.filterService.toggleVisibility();
@@ -72,5 +79,19 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  ngOnInit() {
+    this.userSub = this.authService.user$.subscribe(async user => {
+      this.currentUser = user;
+      if(this.currentUser) {
+        const firestoreUser = await this.authService.getCurrentFirestoreUser();
+        this.profileImageURL = firestoreUser ? firestoreUser.pictureURL : '';
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.userSub?.unsubscribe();
   }
 }

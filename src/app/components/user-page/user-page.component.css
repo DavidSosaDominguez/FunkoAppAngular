@@ -96,7 +96,7 @@
   border: none;
   text-align: center;
   font-size: 1.4em;
-  color: #999999;
+  color: black;
   padding: 5px;
 }
 
@@ -196,3 +196,40 @@
   font-size: 1.3em;
 }
 */
+
+.no-user-error {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+.error-message {
+  font-size: 2em;
+  color: #3745ff;
+  font-weight: bold;
+}
+
+.default-button {
+  padding: 10px;
+  text-align: center;
+  border: solid 2px black;
+  border-radius: 5px;
+  background-color: #3745ff;
+  color: #FFFFFF;
+  font-size: 1.3em;
+}
+
+.submit-error-text {
+  color: #dd0000;
+  font-size: 1.3em;
+  text-align: center;
+  padding:10px;
+}
+
+.submit-form {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  align-items: center;
+}

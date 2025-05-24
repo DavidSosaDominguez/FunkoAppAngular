@@ -2,6 +2,7 @@
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage} from '@angular/fire/storage';
 import { firebaseConfig } from './environments/firebase-config';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
@@ -13,6 +14,9 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore()), provideFirebaseApp(() => initializeApp({ projectId: "funkostorepwm113", appId: "1:670912129319:web:b5304d24e168c546efa102", storageBucket: "funkostorepwm113.firebasestorage.app", apiKey: "AIzaSyAmUAjYmfWsAuKx_8bikj30xELCVRqmk58", authDomain: "funkostorepwm113.firebaseapp.com", messagingSenderId: "670912129319", measurementId: "G-MSNEQXDTM8" })), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ]
 }).catch(err => console.error(err));

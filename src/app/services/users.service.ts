@@ -1,41 +1,58 @@
 import {inject, Injectable} from '@angular/core';
-import {
-  addDoc,
-  collection,
-  Firestore,
-  CollectionReference,
-  query, where, getDocs
-} from '@angular/fire/firestore';
-import {DataBaseUser} from '../interfaces/user';
-import {from, map} from 'rxjs';
+import {doc, Firestore, getDoc, setDoc} from '@angular/fire/firestore';
+import {AppUser, FirestoreUser} from '../interfaces/user';
+import {StorageService} from './storage.service';
 
-
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UsersService {
+  private firestore = inject(Firestore);
+  private storageService = inject(StorageService);
 
-  private firestore: Firestore = inject(Firestore);
+  async addUser(user: AppUser, uid:string) {
+    let downloadURL: string;
+    if(user.picture) {
+      downloadURL = await this.storageService.uploadPicture(user.picture, uid);
+    }else {
+      downloadURL = await this.storageService.getDefaultPicture();
+    }
 
-  addUser(user: DataBaseUser) {
-    const userRef = collection(this.firestore, 'users') as CollectionReference<DataBaseUser>;
-    return addDoc(userRef, user);
+    const firestoreUser: FirestoreUser = {
+      uid,
+      name: user.name,
+      surname: user.surname,
+      email: user.email,
+      pictureURL: downloadURL
+    }
+
+    const userDoc = doc(this.firestore, `users/${uid}`);
+    return await setDoc(userDoc, firestoreUser);
   }
 
-  getUser(email: string){
-    const usersRef = collection(this.firestore, 'users');
-    const q = query(usersRef, where('email' ,'==', email));
+  async getUser(uid: string) {
+    const userDoc = doc(this.firestore, `users/${uid}`);
+    const snapshot = await getDoc(userDoc);
 
-    return from(getDocs(q)).pipe(
-      map(snapshot => {
-        if(snapshot.empty) {
-          return null;
-        }else {
-          const data = snapshot.docs[0].data();
-          return data as DataBaseUser;
-        }
-      })
-    )
+    return snapshot.exists() ? snapshot.data() as FirestoreUser : null;
+  }
+
+  async updateUser(uid: string, name: string, surname: string, newFile?: File) {
+    const userDoc = doc(this.firestore, `users/${uid}`);
+    const snapshot = await getDoc(userDoc);
+
+    if (!snapshot.exists()) throw new Error('Usuario no encontrado');
+
+    const userData = snapshot.data() as FirestoreUser;
+
+    let pictureURL: string = userData.pictureURL;
+    if(newFile) {
+      pictureURL = await this.storageService.uploadPicture(newFile, uid);
+    }
+
+    return await setDoc(userDoc, {
+        ...userData,
+        name,
+        surname,
+        pictureURL
+    });
   }
 }

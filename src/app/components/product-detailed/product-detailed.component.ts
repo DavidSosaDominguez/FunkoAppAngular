@@ -5,7 +5,9 @@ import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../interfaces/funko';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
-import { FavoriteService } from '../../services/favorite.service'; // Asegúrate de que la ruta sea correcta
+import { FavoriteService } from '../../services/favorite.service';
+import {User} from '@angular/fire/auth';
+import {Subscription} from 'rxjs'; // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'app-product-detailed',
@@ -22,6 +24,9 @@ export class ProductDetailedComponent implements OnInit {
   loadingRelated = false;
   authService = inject(AuthService);
 
+  currentUser: User|null = null;
+  private userSub?: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private funkoService: FiguresService,
@@ -35,6 +40,14 @@ export class ProductDetailedComponent implements OnInit {
       const productId = +params['id'];
       this.loadFunkoDetails(productId);
     });
+
+    this.userSub = this.authService.user$.subscribe(user => {
+      this.currentUser = user;
+    })
+  }
+
+  ngOnDestroy() {
+    this.userSub?.unsubscribe();
   }
 
   private loadFunkoDetails(productId: number): void {
@@ -97,6 +110,11 @@ export class ProductDetailedComponent implements OnInit {
       this.favoriteService.toggleFavorite(this.funko.id);
     }
   }
+
+  trackByFunkoId(index: number, funko: Funko): number {
+    return funko.id;
+  }
+
 
 }
 

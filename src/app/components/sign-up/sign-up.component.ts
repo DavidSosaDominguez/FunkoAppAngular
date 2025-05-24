@@ -25,7 +25,8 @@ export class SignUpComponent {
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
     surname: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    picture: [null as File|null]
   });
 
   selectImage(): void {
@@ -38,7 +39,9 @@ export class SignUpComponent {
   onImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
+
     if (file) {
+      this.form.get('picture')?.setValue(file);
       const reader = new FileReader();
       reader.onload = (e) => {
         this.profileImageUrl = e.target?.result as string;
@@ -47,23 +50,19 @@ export class SignUpComponent {
     }
   }
 
-  onSubmit(): void {
-    const rawForm = this.form.getRawValue();
-    this.authService.register(
-      rawForm.name,
-      rawForm.surname,
-      rawForm.email,
-      rawForm.password
-    ).subscribe({
-      next: () => {
-        this.router.navigate(['/']);
-      },
-      error: () => {
-        this.modalService.open(LogInErrorComponent, {
-          size: 'lg',
-          centered: true
-        });
-      }
-    });
+  async onSubmit(): Promise<void> {
+    if (this.form.invalid) return;
+
+    const {name, surname, email, password, picture} = this.form.getRawValue();
+
+    try {
+      await this.authService.register(email, password, name, surname, picture);
+      this.router.navigate(['/']);
+    }catch (error) {
+      this.modalService.open(LogInErrorComponent, {
+        size: 'lg',
+        centered: true
+      })
+    }
   }
 }

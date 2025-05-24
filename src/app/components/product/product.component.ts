@@ -4,6 +4,8 @@ import { Router } from '@angular/router'; // Importa Router
 import { Funko } from '../../interfaces/funko';
 import { FavoriteService } from '../../services/favorite.service';
 import { AuthService} from '../../services/auth.service';
+import {User} from '@angular/fire/auth';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -15,6 +17,8 @@ import { AuthService} from '../../services/auth.service';
 })
 export class ProductComponent {
   @Input({ required: true }) funko!: Funko;
+  currentUser: User|null = null;
+  private userSub?: Subscription;
 
   constructor(private router: Router, private favoriteService: FavoriteService, public authService: AuthService) {}
 
@@ -30,5 +34,15 @@ export class ProductComponent {
     if (this.funko?.id) {
       this.router.navigate(['/product-detail', this.funko.id]);
     }
+  }
+
+  ngOnInit() {
+    this.userSub = this.authService.user$.subscribe(user => {
+      this.currentUser = user;
+    })
+  }
+
+  ngOnDestroy() {
+    this.userSub?.unsubscribe();
   }
 }
