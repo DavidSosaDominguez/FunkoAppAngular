@@ -8,12 +8,14 @@ import { AuthService } from '../../services/auth.service';
 import { FavoriteService } from '../../services/favorite.service';
 import {User} from '@angular/fire/auth';
 import {Subscription} from 'rxjs';
-import {IonicModule} from "@ionic/angular"; // Asegúrate de que la ruta sea correcta
+import {IonicModule} from "@ionic/angular";
+import {FooterComponent} from "../../components/footer/footer.component";
+import {HeaderComponent} from "../../components/header/header.component";
 
 @Component({
   selector: 'product-detailed',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, FooterComponent, HeaderComponent],
   templateUrl: './product-detailed.page.html',
   styleUrls: ['./product-detailed.page.css']
 })
@@ -89,7 +91,7 @@ export class ProductDetailedPage implements OnInit {
   }
 
   viewProductDetailed(id: number): void {
-    this.router.navigate(['/product-detail', id]);
+    this.router.navigate(['/product-detailed', id]);
   }
 
   addToCart(): void {
