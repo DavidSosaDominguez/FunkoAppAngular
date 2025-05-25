@@ -7,11 +7,13 @@ import {IonicModule} from "@ionic/angular";
 import {ProductComponent} from "../../components/product/product.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {FooterComponent} from "../../components/footer/footer.component";
+import {ShoppingResumeComponent} from "../../components/shopping-resume/shopping-resume.component";
+import {FilterBoxComponent} from "../../components/filter-box/filter-box.component";
 
 @Component({
   selector: 'product-list',
   standalone: true,
-  imports: [CommonModule, IonicModule, ProductComponent, HeaderComponent, FooterComponent],
+  imports: [CommonModule, IonicModule, ProductComponent, HeaderComponent, FooterComponent, ShoppingResumeComponent, FilterBoxComponent],
   templateUrl: './product-list.page.html',
   styleUrls: ['./product-list.page.css']
 })

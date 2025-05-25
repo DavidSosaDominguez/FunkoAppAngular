@@ -9,13 +9,13 @@ import { FavoriteService } from '../../services/favorite.service';
 import {User} from '@angular/fire/auth';
 import {Subscription} from 'rxjs';
 import {IonicModule} from "@ionic/angular";
-import {FooterComponent} from "../../components/footer/footer.component";
 import {HeaderComponent} from "../../components/header/header.component";
+import {FooterComponent} from "../../components/footer/footer.component"; // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'product-detailed',
   standalone: true,
-  imports: [CommonModule, IonicModule, FooterComponent, HeaderComponent],
+  imports: [CommonModule, IonicModule, HeaderComponent, FooterComponent],
   templateUrl: './product-detailed.page.html',
   styleUrls: ['./product-detailed.page.css']
 })
