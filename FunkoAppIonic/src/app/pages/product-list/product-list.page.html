@@ -4,10 +4,13 @@
 
 <ion-content>
     <ion-card id="product_list_container" *ngIf="!loading && !errorMessage">
-      <app-product *ngFor="let funko of filteredFunkos" class="product_holder"
+       <app-shopping-resume></app-shopping-resume>
+        <app-filter-box></app-filter-box>
+        <app-product *ngFor="let funko of filteredFunkos" class="product_holder"
                    [funko] = "funko">
       </app-product>
     </ion-card>
+
 
   <ion-footer>
     <app-footer></app-footer>
