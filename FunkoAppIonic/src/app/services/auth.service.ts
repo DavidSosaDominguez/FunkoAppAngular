@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { inject } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, User, signOut } from '@angular/fire/auth';
-import {from, map, Observable, Subscription} from 'rxjs';
+import {catchError, from, map, Observable, Subscription, throwError} from 'rxjs';
 import { authState } from 'rxfire/auth';
 import { AppUser } from '../interfaces/user';
 import { UsersService } from './users.service';
@@ -39,10 +39,33 @@ export class AuthService implements OnDestroy{
   }
 
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<User> {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-      map(cred => cred.user)
+        map(cred => cred.user),
+        catchError(error => {
+          console.error('Firebase auth error:', error);
+          // Convertimos el error a un objeto que podamos manejar mejor
+          const authError = {
+            code: error.code,
+            message: this.getFriendlyErrorMessage(error)
+          };
+          return throwError(() => authError); // Re-lanzamos el error modificado
+        })
     );
+  }
+
+  private getFriendlyErrorMessage(error: any): string {
+    switch (error.code) {
+      case 'auth/invalid-credential':
+      case 'auth/wrong-password':
+        return 'Correo electrónico o contraseña incorrectos';
+      case 'auth/user-not-found':
+        return 'No existe una cuenta con este correo electrónico';
+      case 'auth/too-many-requests':
+        return 'Demasiados intentos fallidos. Por favor, inténtalo más tarde';
+      default:
+        return 'Error al iniciar sesión. Por favor, inténtalo de nuevo';
+    }
   }
 
   logout() {

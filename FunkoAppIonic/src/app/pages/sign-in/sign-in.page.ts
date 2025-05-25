@@ -1,54 +1,62 @@
-import {Component, inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {SignInErrorComponent} from "../../components/sign-in-error/sign-in-error.component";
-import {IonicModule} from "@ionic/angular";
+import { ModalController } from '@ionic/angular';
+import { SignInErrorComponent } from '../../components/sign-in-error/sign-in-error.component';
+import { IonicModule } from '@ionic/angular';
 import {HeaderComponent} from "../../components/header/header.component";
 import {FooterComponent} from "../../components/footer/footer.component";
 
 @Component({
   selector: 'sign-in',
-  imports: [
-    ReactiveFormsModule,
-    IonicModule,
-    HeaderComponent,
-    FooterComponent
-  ],
   templateUrl: './sign-in.page.html',
-  styleUrl: './sign-in.page.css'
+  styleUrls: ['./sign-in.page.css'],
+  standalone: true,
+  imports: [IonicModule, HeaderComponent, FooterComponent, ReactiveFormsModule]
 })
 export class SignInPage {
-  authService = inject(AuthService);
-  fb = inject(FormBuilder);
-  form = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-  });
-  modalService = inject(NgbModal);
+  private authService = inject(AuthService);
+  private fb = inject(FormBuilder);
+  private modalCtrl = inject(ModalController);
+  private router = inject(Router);
 
-  constructor(private router: Router) {
+  form = this.fb.nonNullable.group({
+    email: ['', ],
+    password: [''],
+  });
+
+  async onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const { email, password } = this.form.getRawValue();
+
+    this.authService.login(email, password).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: async (error) => {
+        console.log('Error durante el login:', error);
+        await this.showErrorModal(error.message || 'Error desconocido');
+      }
+    });
+  }
+
+  private async showErrorModal(message: string) {
+    const modal = await this.modalCtrl.create({
+      component: SignInErrorComponent,
+      componentProps: {
+        errorMessage: message
+      },
+      cssClass: 'error-modal'
+    });
+    await modal.present();
   }
 
   goToSignUpPage() {
     this.router.navigate(['/sign-up']);
-  }
-
-  onSubmit() {
-    const rawForm = this.form.getRawValue();
-    this.authService.login(rawForm.email, rawForm.password).subscribe({
-      next: () => {
-        this.router.navigate(['/']);
-      },
-      error: () => {
-        this.modalService.open(SignInErrorComponent, {
-          size: 'lg',
-          centered: true,
-        })
-      }
-
-    });
-
   }
 }

@@ -11,7 +11,6 @@ import {IonicModule} from "@ionic/angular";
 import {LogInErrorComponent} from "../../components/log-in-error/log-in-error.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {FooterComponent} from "../../components/footer/footer.component";
-import {ProductComponent} from "../../components/product/product.component";
 
 @Component({
   selector: 'user-page',
@@ -22,7 +21,6 @@ import {ProductComponent} from "../../components/product/product.component";
     RouterLink,
     HeaderComponent,
     FooterComponent,
-    ProductComponent,
   ],
   templateUrl: './user-profile.page.html',
   styleUrls: ['./user-profile.page.css']
