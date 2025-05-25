@@ -11,7 +11,7 @@ import {IonicModule} from "@ionic/angular";
 import {LogInErrorComponent} from "../../components/log-in-error/log-in-error.component";
 
 @Component({
-  selector: 'app-user-page',
+  selector: 'user-page',
   imports: [
     ReactiveFormsModule,
     CommonModule,

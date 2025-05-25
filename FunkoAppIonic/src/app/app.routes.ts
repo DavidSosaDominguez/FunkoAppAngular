@@ -6,8 +6,8 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/product-list/product-list.page').then(m => m.ProductListPage)
   },
   {
-    path: 'product-detailed',
-    loadComponent: () => import('./pages/product-detailed/product-detailed.page').then( m => m.ProductDetailedPage)
+    path: 'product-detailed/:id',
+    loadComponent: () => import('./pages/product-detailed/product-detailed.page').then(m => m.ProductDetailedPage)
   },
   {
     path: 'sign-in',

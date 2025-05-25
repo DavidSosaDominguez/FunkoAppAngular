@@ -11,7 +11,7 @@ import {Subscription} from 'rxjs';
 import {IonicModule} from "@ionic/angular"; // Asegúrate de que la ruta sea correcta
 
 @Component({
-  selector: 'app-product-detailed',
+  selector: 'product-detailed',
   standalone: true,
   imports: [CommonModule, IonicModule],
   templateUrl: './product-detailed.page.html',

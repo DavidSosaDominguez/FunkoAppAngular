@@ -33,7 +33,7 @@ export class ProductComponent {
 
   viewProductDetailed(): void {
     if (this.funko?.id) {
-      this.router.navigate(['/product-detail', this.funko.id]);
+      this.router.navigate(['/product-detailed', this.funko.id]);
     }
   }
 

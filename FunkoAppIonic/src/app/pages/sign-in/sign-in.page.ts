@@ -7,7 +7,7 @@ import {SignInErrorComponent} from "../../components/sign-in-error/sign-in-error
 import {IonicModule} from "@ionic/angular";
 
 @Component({
-  selector: 'app-sign-in',
+  selector: 'sign-in',
   imports: [
     ReactiveFormsModule,
     IonicModule

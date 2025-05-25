@@ -7,7 +7,7 @@ import {IonicModule} from "@ionic/angular";
 import {ProductComponent} from "../../components/product/product.component";
 
 @Component({
-  selector: 'app-product-list',
+  selector: 'product-list',
   standalone: true,
   imports: [CommonModule, IonicModule, ProductComponent],
   templateUrl: './product-list.page.html',
