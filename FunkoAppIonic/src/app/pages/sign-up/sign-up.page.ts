@@ -4,9 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {LogInErrorComponent} from "../../components/log-in-error/log-in-error.component";
-import {IonicModule} from "@ionic/angular";
+import {IonicModule, ModalController} from "@ionic/angular";
 import {HeaderComponent} from "../../components/header/header.component";
 import {FooterComponent} from "../../components/footer/footer.component";
+import {SignInErrorComponent} from "../../components/sign-in-error/sign-in-error.component";
+import {SignUpErrorComponent} from "../../components/sign-up-error/sign-up-error.component";
 
 @Component({
   selector: 'sign-up',
@@ -23,7 +25,7 @@ export class SignUpPage {
   router = inject(Router);
   authService = inject(AuthService);
   fb = inject(FormBuilder);
-  modalService = inject(NgbModal);
+  private modalCtrl = inject(ModalController);
 
   profileImageUrl: string | null = null;
 
@@ -57,18 +59,86 @@ export class SignUpPage {
   }
 
   async onSubmit(): Promise<void> {
-    if (this.form.invalid) return;
+    this.form.markAllAsTouched();
 
-    const {name, surname, email, password, picture} = this.form.getRawValue();
+    if (this.form.invalid) {
+      const errorMessage = this.getValidationErrorMessage();
+      await this.showErrorModal(errorMessage);
+      return;
+    }
+
+    const { name, surname, email, password, picture } = this.form.getRawValue();
 
     try {
       await this.authService.register(email, password, name, surname, picture);
       this.router.navigate(['/']);
-    }catch (error) {
-      this.modalService.open(LogInErrorComponent, {
-        size: 'lg',
-        centered: true
-      })
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      await this.showErrorModal(error.message || 'Error desconocido durante el registro');
+    }
+  }
+
+  private async showErrorModal(message: string): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: SignUpErrorComponent,
+      componentProps: {
+        errorMessage: message
+      },
+      cssClass: 'error-modal'
+    });
+    await modal.present();
+  }
+
+  private getValidationErrorMessage(): string {
+    const errors = [];
+
+    if (this.form.get('name')?.errors) {
+      if (this.form.get('name')?.errors?.['required']) {
+        errors.push('• El nombre es requerido');
+      } else if (this.form.get('name')?.errors?.['pattern']) {
+        errors.push('• El nombre solo puede contener letras');
+      }
+    }
+
+    if (this.form.get('surname')?.errors) {
+      if (this.form.get('surname')?.errors?.['required']) {
+        errors.push('• El apellido es requerido');
+      } else if (this.form.get('surname')?.errors?.['pattern']) {
+        errors.push('• El apellido solo puede contener letras');
+      }
+    }
+
+    if (this.form.get('email')?.errors) {
+      if (this.form.get('email')?.errors?.['required']) {
+        errors.push('• El email es requerido');
+      } else if (this.form.get('email')?.errors?.['email']) {
+        errors.push('• Email inválido');
+      }
+    }
+
+    if (this.form.get('password')?.errors) {
+      if (this.form.get('password')?.errors?.['required']) {
+        errors.push('• La contraseña es requerida');
+      } else if (this.form.get('password')?.errors?.['minlength']) {
+        errors.push('• La contraseña debe tener al menos 6 caracteres');
+      }
+    }
+
+    return errors.join('\n');
+  }
+
+  private getFirebaseErrorMessage(error: any): string {
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        return 'El correo electrónico ya está en uso';
+      case 'auth/invalid-email':
+        return 'Correo electrónico inválido';
+      case 'auth/operation-not-allowed':
+        return 'Operación no permitida';
+      case 'auth/weak-password':
+        return 'La contraseña es demasiado débil';
+      default:
+        return 'Error durante el registro. Por favor, inténtalo de nuevo.';
     }
   }
 }

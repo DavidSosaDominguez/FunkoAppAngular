@@ -1,13 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar } from "@ionic/angular/standalone";
 
 @Component({
-  selector: 'app-sign-in-error',
+  selector: 'app-sign-up-error',
+  standalone: true,
   template: `
     <ion-header>
       <ion-toolbar color="danger">
-        <ion-title>Error al intentar el inicio de sesión</ion-title>
+        <ion-title>Error al intentar el registro</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="dismiss()">Cerrar</ion-button>
         </ion-buttons>
@@ -32,13 +33,12 @@ import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonTool
     ion-content {
       text-align: center;
     }
-
     ion-icon {
       margin-bottom: 16px;
     }
   `]
 })
-export class SignInErrorComponent {
+export class SignUpErrorComponent {
   @Input() errorMessage!: string;
 
   constructor(private modalCtrl: ModalController) {}

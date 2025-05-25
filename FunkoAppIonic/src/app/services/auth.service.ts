@@ -21,21 +21,42 @@ export class AuthService implements OnDestroy{
     })
   }
 
-  async register(email: string, password: string, name: string, surname: string, picture: File | null) {
-    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+  async register(email: string, password: string, name: string, surname: string, picture: File | null): Promise<User> {
+    try {
+      const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+      const uid = cred.user.uid;
 
-    const uid = cred.user.uid;
+      const dbUser: AppUser = {
+        email,
+        name,
+        surname,
+        picture: picture
+      };
 
-    const dbUser: AppUser = {
-      email,
-      name,
-      surname,
-      picture: picture
+      await this.userService.addUser(dbUser, uid);
+      return cred.user;
+    } catch (error: any) {
+      console.error('Firebase registration error:', error);
+      throw {
+        code: error.code,
+        message: this.getFriendlyRegisterErrorMessage(error)
+      };
     }
+  }
 
-    await this.userService.addUser(dbUser, uid);
-
-    return cred.user;
+  private getFriendlyRegisterErrorMessage(error: any): string {
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        return 'El correo electrónico ya está en uso';
+      case 'auth/invalid-email':
+        return 'Correo electrónico inválido';
+      case 'auth/operation-not-allowed':
+        return 'Operación no permitida';
+      case 'auth/weak-password':
+        return 'La contraseña es demasiado débil';
+      default:
+        return 'Error durante el registro. Por favor, inténtalo de nuevo.';
+    }
   }
 
 
