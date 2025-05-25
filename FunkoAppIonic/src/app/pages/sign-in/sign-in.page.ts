@@ -5,12 +5,16 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {SignInErrorComponent} from "../../components/sign-in-error/sign-in-error.component";
 import {IonicModule} from "@ionic/angular";
+import {HeaderComponent} from "../../components/header/header.component";
+import {FooterComponent} from "../../components/footer/footer.component";
 
 @Component({
   selector: 'sign-in',
   imports: [
     ReactiveFormsModule,
-    IonicModule
+    IonicModule,
+    HeaderComponent,
+    FooterComponent
   ],
   templateUrl: './sign-in.page.html',
   styleUrl: './sign-in.page.css'

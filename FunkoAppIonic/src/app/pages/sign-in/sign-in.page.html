@@ -1,18 +1,23 @@
+<ion-header>
+  <app-header></app-header>
+</ion-header>
+
 <ion-content [fullscreen]="true">
-  <main>
-    <article id="register_box">
+    <ion-card id="register_box">
       <h1 id="register_text">Sign In</h1>
       <form class="input_form" id="login_form" [formGroup]="form" (ngSubmit)="onSubmit()">
-        <input id="email" type="email" placeholder="Email*" formControlName="email"/>
-        <input id="password" type="password" placeholder="Password*" formControlName="password"/>
+        <ion-input id="email" type="email" placeholder="Email*" formControlName="email"/>
+        <ion-input id="password" type="password" placeholder="Password*" formControlName="password"/>
         <button type="submit" id="submit_button">Submit</button>
       </form>
-    </article>
-    <section id="register_link">
+    </ion-card>
+    <ion-card id="register_link">
       <button type="button" id="signup_link" (click)="goToSignUpPage()">
         <a>New to the shop? Register here</a>
       </button>
-    </section>
-  </main>
-
+    </ion-card>
 </ion-content>
+
+<ion-footer>
+  <app-footer></app-footer>
+</ion-footer>
