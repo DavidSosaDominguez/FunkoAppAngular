@@ -26,11 +26,21 @@
     <section class="price-value">
       <p>Max. Price: {{ priceValue }} €</p>
     </section>
+  </fieldset>
 
+    <!-- Aquí el checkbox para favoritos -->
+    <fieldset *ngIf="isAuthenticated" class="favorites-filter">
+        <legend>Show Favorites Only?</legend>
+        <label>
+          <input type="checkbox"
+                 [checked]="showFavoritesOnly"
+                 (change)="onFavoritesToggle($event)">
+          Yes (x) / No ( )
+        </label>
+    </fieldset>
     <button type="button"
             class="apply-filters"
             (click)="applyFilters()">
       Apply Filters
     </button>
-  </fieldset>
 </form>

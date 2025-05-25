@@ -118,7 +118,5 @@ export class ProductDetailedPage implements OnInit {
   trackByFunkoId(index: number, funko: Funko): number {
     return funko.id;
   }
-
-
 }
 
