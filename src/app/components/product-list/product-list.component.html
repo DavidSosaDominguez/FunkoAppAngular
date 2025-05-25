@@ -1,7 +1,0 @@
-<main>
-  <section id="product_list_container" *ngIf="!loading && !errorMessage">
-    <app-product *ngFor="let funko of filteredFunkos" class="product_holder"
-                 [funko] = "funko">
-    </app-product>
-  </section>
-</main>

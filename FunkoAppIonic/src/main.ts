@@ -8,7 +8,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideIonicAngular } from '@ionic/angular/standalone';
-import {firebaseConfig} from "./app/environments/firebase-config"; // ✅ IMPORTAR ESTO
+import {firebaseConfig} from "./environments/firebase-config"; // ✅ IMPORTAR ESTO
 
 bootstrapApplication(AppComponent, {
   providers: [
