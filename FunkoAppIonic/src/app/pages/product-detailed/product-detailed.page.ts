@@ -10,12 +10,13 @@ import {User} from '@angular/fire/auth';
 import {Subscription} from 'rxjs';
 import {IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../../components/header/header.component";
-import {FooterComponent} from "../../components/footer/footer.component"; // Asegúrate de que la ruta sea correcta
+import {FooterComponent} from "../../components/footer/footer.component";
+import {ShoppingResumeComponent} from "../../components/shopping-resume/shopping-resume.component"; // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'product-detailed',
   standalone: true,
-  imports: [CommonModule, IonicModule, HeaderComponent, FooterComponent],
+    imports: [CommonModule, IonicModule, HeaderComponent, FooterComponent, ShoppingResumeComponent],
   templateUrl: './product-detailed.page.html',
   styleUrls: ['./product-detailed.page.css']
 })
