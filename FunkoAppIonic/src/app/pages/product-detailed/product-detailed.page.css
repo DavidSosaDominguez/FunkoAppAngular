@@ -213,3 +213,7 @@ nav {
   align-items: center;
   gap: 10px;
 }
+
+ion-card {
+  background-color: #D4EFFF;
+}

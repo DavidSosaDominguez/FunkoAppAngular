@@ -91,7 +91,7 @@ export class ProductDetailedPage implements OnInit {
   }
 
   viewProductDetailed(id: number): void {
-    this.router.navigate(['/product-detail', id]);
+    this.router.navigate(['/product-detailed', id]);
   }
 
   addToCart(): void {

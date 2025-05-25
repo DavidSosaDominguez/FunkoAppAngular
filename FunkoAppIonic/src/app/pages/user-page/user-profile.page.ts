@@ -9,6 +9,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CommonModule} from '@angular/common';
 import {IonicModule} from "@ionic/angular";
 import {LogInErrorComponent} from "../../components/log-in-error/log-in-error.component";
+import {HeaderComponent} from "../../components/header/header.component";
+import {FooterComponent} from "../../components/footer/footer.component";
+import {ProductComponent} from "../../components/product/product.component";
 
 @Component({
   selector: 'user-page',
@@ -17,6 +20,9 @@ import {LogInErrorComponent} from "../../components/log-in-error/log-in-error.co
     CommonModule,
     IonicModule,
     RouterLink,
+    HeaderComponent,
+    FooterComponent,
+    ProductComponent,
   ],
   templateUrl: './user-profile.page.html',
   styleUrls: ['./user-profile.page.css']

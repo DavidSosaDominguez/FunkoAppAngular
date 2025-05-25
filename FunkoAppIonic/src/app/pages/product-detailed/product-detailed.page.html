@@ -4,117 +4,62 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <main>
-    <!--
-    @if (loading) {
-      <p>Cargando producto...</p>
-    } @else if (error) {
-      <p>Error al cargar el producto</p>
-    } @else if (funko) {
-      <article id="product_display">
-        <section class="product_sections">
-          <figure id="product_image_container">
-            <img id="product_image" [src]="funko.image" [alt]="funko.name" />
-          </figure>
-        </section>
+<ion-content>
+    <ion-card>
+        <p *ngIf="loading">Cargando producto...</p>
+        <p *ngIf="error">Error al cargar el producto</p>
 
-        <section id="product_info" class="product_sections">
-          <section id="product_def_container">
-            <section class="title_and_favorite">
-              <h1 id="product_title">{{funko.name}}</h1>
-              <ng-container *ngIf="currentUser">
-                <button class="toggle-favorite_button" (click)="toggleFavorite()">
-                  <img [src]="isFavorite() ? 'assets/images/favorite.png' : 'assets/images/not-favorite.png'" alt="Toggle favorite" />
+        <article *ngIf="funko && !loading && !error" id="product_display">
+            <section class="product_sections">
+                <figure id="product_image_container">
+                    <img id="product_image" [src]="funko.image" [alt]="funko.name" />
+                </figure>
+            </section>
+
+            <section id="product_info" class="product_sections">
+                <section id="product_def_container">
+                    <section class="title_and_favorite">
+                        <h1 id="product_title">{{ funko.name }}</h1>
+                        <ng-container *ngIf="currentUser">
+                            <button class="toggle-favorite_button" (click)="toggleFavorite()">
+                                <img
+                                        [src]="isFavorite() ? 'assets/images/favorite.png' : 'assets/images/not-favorite.png'"
+                                        alt="Toggle favorite" />
+                            </button>
+                        </ng-container>
+                    </section>
+                    <h2 id="category_text">{{ funko.series }}</h2>
+                </section>
+                <p id="product_description">{{ funko.description }}</p>
+                <p id="product_price">{{ funko.price }}€</p>
+
+                <button
+                        type="button"
+                        id="buy_button"
+                        (click)="currentUser ? addToCart() : goToSignIn()">
+                    Add to Cart
                 </button>
-              </ng-container>
             </section>
-            <h2 id="category_text">{{funko.series}}</h2>
-          </section>
-          <p id="product_description">{{ funko.description }}</p>
-          <p id="product_price">{{ funko.price }}€</p>
-          @if (currentUser) {
-            <button type="button" id="buy_button" (click)="addToCart()">Add to Cart</button>
-          } @else {
-            <button type="button" id="buy_button" (click)="goToSignIn()">Add to Cart</button>
-          }
-        </section>
-      </article>
-    } @else {
-      <p>Product not found.</p>
-    }
+        </article>
 
-    <aside>
-      <h2 id="related_products_text">It may interest you...</h2>
+        <p *ngIf="!funko && !loading && !error">Product not found.</p>
 
-      @if (loadingRelated) {
-        <p>Loading related products...</p>
-      } @else if (relatedFunkos.length > 0) {
-        <nav id="related_items_container">
-          @for (funko of relatedFunkos; track funko.id) {
-            <section class="related_product_item" (click)="viewProductDetailed(funko.id)">
-              <img class="related_images" [src]="funko.image" [alt]="funko.name" />
-              <p class="related_products_text">{{ funko.name }}</p>
-            </section>
-          }
-        </nav>
-      }
-    </aside>
-  -->
-    <p *ngIf="loading">Cargando producto...</p>
-    <p *ngIf="error">Error al cargar el producto</p>
+        <aside>
+            <h2 id="related_products_text">It may interest you...</h2>
 
-    <article *ngIf="funko && !loading && !error" id="product_display">
-      <section class="product_sections">
-        <figure id="product_image_container">
-          <img id="product_image" [src]="funko.image" [alt]="funko.name" />
-        </figure>
-      </section>
+            <p *ngIf="loadingRelated">Loading related products...</p>
 
-      <section id="product_info" class="product_sections">
-        <section id="product_def_container">
-          <section class="title_and_favorite">
-            <h1 id="product_title">{{ funko.name }}</h1>
-            <ng-container *ngIf="currentUser">
-              <button class="toggle-favorite_button" (click)="toggleFavorite()">
-                <img
-                  [src]="isFavorite() ? 'assets/images/favorite.png' : 'assets/images/not-favorite.png'"
-                  alt="Toggle favorite" />
-              </button>
-            </ng-container>
-          </section>
-          <h2 id="category_text">{{ funko.series }}</h2>
-        </section>
-        <p id="product_description">{{ funko.description }}</p>
-        <p id="product_price">{{ funko.price }}€</p>
-
-        <button
-          type="button"
-          id="buy_button"
-          (click)="currentUser ? addToCart() : goToSignIn()">
-          Add to Cart
-        </button>
-      </section>
-    </article>
-
-    <p *ngIf="!funko && !loading && !error">Product not found.</p>
-
-    <aside>
-      <h2 id="related_products_text">It may interest you...</h2>
-
-      <p *ngIf="loadingRelated">Loading related products...</p>
-
-      <nav *ngIf="!loadingRelated && relatedFunkos.length > 0" id="related_items_container">
-        <section
-          class="related_product_item"
-          *ngFor="let funko of relatedFunkos; trackBy: trackByFunkoId"
-          (click)="viewProductDetailed(funko.id)">
-          <img class="related_images" [src]="funko.image" [alt]="funko.name" />
-          <p class="related_products_text">{{ funko.name }}</p>
-        </section>
-      </nav>
-    </aside>
-  </main>
+            <nav *ngIf="!loadingRelated && relatedFunkos.length > 0" id="related_items_container">
+                <section
+                        class="related_product_item"
+                        *ngFor="let funko of relatedFunkos; trackBy: trackByFunkoId"
+                        (click)="viewProductDetailed(funko.id)">
+                    <img class="related_images" [src]="funko.image" [alt]="funko.name" />
+                    <p class="related_products_text">{{ funko.name }}</p>
+                </section>
+            </nav>
+        </aside>
+    </ion-card>
 </ion-content>
 
 <ion-footer>
