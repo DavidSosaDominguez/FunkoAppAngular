@@ -1,52 +1,54 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>user-page</ion-title>
-  </ion-toolbar>
+    <app-header></app-header>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <main>
-    <section class ="main-container">
-    <article *ngIf="!firestoreUser" class="no-user-error">
-      <h2 class="error-message">
-        There is no user logged in!
+    <ion-card>
+        <section class ="main-container">
+            <article *ngIf="!firestoreUser" class="no-user-error">
+                <h2 class="error-message">
+                    There is no user logged in!
+                </h2>
+                <button class="default-button" [routerLink]="['/']">Ir al inicio</button>
+            </article>
+            <article *ngIf="firestoreUser" class="user-info-container">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <section class="user-picture-name">
+    <span class="profile-picture-wrapper">
+      <img id="profile-image" class="user-image" [src]="profileImageUrl || 'assets/images/profile.png'" alt="user picture"/>
+      <button class="edit-icon" type="button" (click)="selectImage()">✎</button>
+      <input type="file" accept="image/*" id="select-picture-input" name="profile-picture" hidden (change)="onImageSelected($event)" #fileInput>
+    </span>
+                        <span class="user-name-email">
+      <h2 class="user-name">
+        {{firestoreUser.name || 'Error'}}
       </h2>
-      <button class="default-button" [routerLink]="['/']">Ir al inicio</button>
-    </article>
-    <article *ngIf="firestoreUser" class="user-info-container">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <section class="user-picture-name">
-        <span class="profile-picture-wrapper">
-          <img id="profile-image" class="user-image" [src]="profileImageUrl || 'assets/images/profile.png'" alt="user picture"/>
-          <button class="edit-icon" type="button" (click)="selectImage()">✎</button>
-          <input type="file" accept="image/*" id="select-picture-input" name="profile-picture" hidden (change)="onImageSelected($event)" #fileInput>
-        </span>
-          <span class="user-name-email">
-          <h2 class="user-name">
-            {{firestoreUser.name || 'Error'}}
-          </h2>
-          <h3 class="user-email">
-            {{firestoreUser.email || 'Error'}}
-          </h3>
-        </span>
+      <h3 class="user-email">
+        {{firestoreUser.email || 'Error'}}
+      </h3>
+    </span>
+                    </section>
+                    <hr class="separation-bar">
+                    <section class="text-section" id="name-section">
+                        <h2 class="section-name">Name</h2>
+                        <input class="section-input" id="name" type="text" placeholder="Insert new name" name="name" pattern="[a-zA-Z]+" title="Insert your name (only alphabetic characters)" formControlName="name" />
+                    </section>
+                    <hr class="separation-bar">
+                    <section class="text-section">
+                        <h2 class="section-name">Surname</h2>
+                        <input class="section-input" id="surname" type="text" placeholder="Insert new surname" name="surname" pattern="[a-zA-Z]+" title="Insert your surname (only alphabetic characters)" formControlName="surname"/>
+                    </section>
+                    <hr class="separation-bar">
+                    <section class="submit-form">
+                        <button class="submit-profile-form" type="submit">Save changes</button>
+                        <p *ngIf="formError" class="submit-error-text">Fill in all the fields</p>
+                    </section>
+                </form>
+            </article>
         </section>
-        <hr class="separation-bar">
-        <section class="text-section" id="name-section">
-          <h2 class="section-name">Name</h2>
-          <input class="section-input" id="name" type="text" placeholder="Insert new name" name="name" pattern="[a-zA-Z]+" title="Insert your name (only alphabetic characters)" formControlName="name" />
-        </section>
-        <hr class="separation-bar">
-        <section class="text-section">
-          <h2 class="section-name">Surname</h2>
-          <input class="section-input" id="surname" type="text" placeholder="Insert new surname" name="surname" pattern="[a-zA-Z]+" title="Insert your surname (only alphabetic characters)" formControlName="surname"/>
-        </section>
-        <hr class="separation-bar">
-        <section class="submit-form">
-          <button class="submit-profile-form" type="submit">Save changes</button>
-          <p *ngIf="formError" class="submit-error-text">Fill in all the fields</p>
-        </section>
-      </form>
-    </article>
-    </section>
-  </main>
+    </ion-card>
+
+    <ion-footer>
+        <app-footer></app-footer>
+    </ion-footer>
 </ion-content>

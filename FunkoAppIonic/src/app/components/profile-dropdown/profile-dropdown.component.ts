@@ -26,7 +26,7 @@ export class ProfileDropdownComponent {
   }
 
   goToProfileEdit(): void {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/user-profile']);
     this.dropdownService.hide(); // Oculta el menú tras navegar
   }
 }
