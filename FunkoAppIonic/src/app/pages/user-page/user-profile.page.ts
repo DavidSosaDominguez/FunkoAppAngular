@@ -6,38 +6,40 @@ import {FormBuilder} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {FirestoreUser} from '../../interfaces/user';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {LogInErrorComponent} from '../log-in-error/log-in-error.component';
 import {CommonModule} from '@angular/common';
+import {IonicModule} from "@ionic/angular";
+import {LogInErrorComponent} from "../../components/log-in-error/log-in-error.component";
 
 @Component({
   selector: 'app-user-page',
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    RouterLink
+    IonicModule,
+    RouterLink,
   ],
-  templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css']
+  templateUrl: './user-profile.page.html',
+  styleUrls: ['./user-profile.page.css']
 })
-export class UserPageComponent implements OnInit, OnDestroy{
+export class UserProfilePage implements OnInit, OnDestroy{
   ngOnDestroy(): void {
-      this.userSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
   ngOnInit(): void {
-      this.userSub = this.authService.user$.subscribe(async user => {
-        if(user) {
-          this.firestoreUser = await this.authService.getCurrentFirestoreUser();
-          this.profileImageUrl = this.firestoreUser ? this.firestoreUser.pictureURL : '';
-          if(this.firestoreUser) {
-            this.form.patchValue({
-              name: this.firestoreUser ? this.firestoreUser.name : 'Default',
-              surname: this.firestoreUser ? this.firestoreUser.surname : 'Default',
-            })
-          }
-        }else {
-          this.firestoreUser = null;
+    this.userSub = this.authService.user$.subscribe(async user => {
+      if(user) {
+        this.firestoreUser = await this.authService.getCurrentFirestoreUser();
+        this.profileImageUrl = this.firestoreUser ? this.firestoreUser.pictureURL : '';
+        if(this.firestoreUser) {
+          this.form.patchValue({
+            name: this.firestoreUser ? this.firestoreUser.name : 'Default',
+            surname: this.firestoreUser ? this.firestoreUser.surname : 'Default',
+          })
         }
-      });
+      }else {
+        this.firestoreUser = null;
+      }
+    });
   }
   router = inject(Router);
   authService = inject(AuthService);
