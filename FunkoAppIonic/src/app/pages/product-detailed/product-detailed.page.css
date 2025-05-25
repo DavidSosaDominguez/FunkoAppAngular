@@ -101,9 +101,13 @@ main {
 }
 
 .related_images {
-  width: 150px;
-  margin: auto;
+  width: 300px;       /* Tamaño base fijo */
+  max-width: 35%;    /* Que no sobrepase el contenedor en pantallas pequeñas */
+  height: auto;       /* Mantener proporción */
+  object-fit: contain; /* Para que no se deformen si cambian el tamaño */
   cursor: pointer;
+  margin: auto;
+  display: block;
 }
 
 aside {
