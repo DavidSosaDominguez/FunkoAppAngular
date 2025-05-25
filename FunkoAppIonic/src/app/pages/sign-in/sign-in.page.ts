@@ -1,20 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {Component, inject} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {SignInErrorComponent} from "../../components/sign-in-error/sign-in-error.component";
+import {IonicModule} from "@ionic/angular";
 
 @Component({
   selector: 'app-sign-in',
+  imports: [
+    ReactiveFormsModule,
+    IonicModule
+  ],
   templateUrl: './sign-in.page.html',
-  styleUrls: ['./sign-in.page.css'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  styleUrl: './sign-in.page.css'
 })
-export class SignInPage implements OnInit {
+export class SignInPage {
+  authService = inject(AuthService);
+  fb = inject(FormBuilder);
+  form = this.fb.nonNullable.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+  });
+  modalService = inject(NgbModal);
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private router: Router) {
   }
 
+  goToSignUpPage() {
+    this.router.navigate(['/sign-up']);
+  }
+
+  onSubmit() {
+    const rawForm = this.form.getRawValue();
+    this.authService.login(rawForm.email, rawForm.password).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        this.modalService.open(SignInErrorComponent, {
+          size: 'lg',
+          centered: true,
+        })
+      }
+
+    });
+
+  }
 }
