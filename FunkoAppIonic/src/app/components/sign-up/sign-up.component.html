@@ -1,0 +1,23 @@
+
+  <main>
+
+    <article id="register_box">
+      <h1 id="register_text">Sign Up</h1>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="input_form" id="signup_form">
+
+        <span class="profile-picture-wrapper">
+          <img id="profile-image" class="user-image" [src]="profileImageUrl || 'assets/images/profile.png'" alt="user picture" />
+          <button class="edit-icon" type="button" (click)="selectImage()">✎</button>
+          <input type="file" accept="image/*" id="select-picture-input" name="profile-picture" style="display: none;" (change)="onImageSelected($event)" #fileInput />
+        </span>
+
+        <input id="name" type="text" placeholder="Name*" name="name" pattern="[a-zA-Z]+" required title="Insert your name (only alphabetic characters)" formControlName="name" />
+        <input id="surname" type="text" placeholder="Surname*" name="surname" pattern="[a-zA-Z]+" required title="Insert your surname (only alphabetic characters)" formControlName="surname" />
+        <input id="email" type="email" placeholder="Email*" name="email" required formControlName="email" />
+        <input id="password" type="password" placeholder="Password*" name="password" required formControlName="password" />
+        <button type="submit" id="submit_button">Submit</button>
+
+      </form>
+    </article>
+
+  </main>
