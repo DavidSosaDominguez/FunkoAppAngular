@@ -1,21 +1,21 @@
 <header>
   <section class="logo-title-list" (click)="returnHome()">
     <figure>
-      <img src="assets/images/logo.png" alt="logo de la empresa" class="logo">
+      <img src="../../assets/images/logo.png" alt="logo de la empresa" class="logo">
     </figure>
     <h1 class="sigmar-one-regular" id="title"><a>Funko Store</a></h1>
   </section>
 
   <form class="search-container" (submit)="onSearch(); $event.preventDefault()">
     <button type="button" id="filter-button" (click)="toggleFilter()">
-      <img src="assets/images/filter.png" alt="Filtrar" class="filter-icon">
+      <img src="../../assets/images/filter.png" alt="Filtrar" class="filter-icon">
     </button>
     <label>
       <input type="text" id="searchInput" placeholder="Buscar figuras..."
              [(ngModel)]="searchTerm" name="searchTerm">
     </label>
     <button type="submit" id="search-button">
-      <img src="assets/images/search.png" alt="buscar" class="search-icon">
+      <img src="../../assets/images/search.png" alt="buscar" class="search-icon">
     </button>
   </form>
 
@@ -32,7 +32,7 @@
         <app-profile-dropdown *ngIf="profileDropdownService.isVisible$ | async"></app-profile-dropdown>
       </section>
       <button class="signed-in-button" id="cart-button" (click)="toggleCart()">
-        <img src="assets/images/shopping-cart.png" alt="Cart" class="cart-icon">
+        <img src="../../assets/images/shopping-cart.png" alt="Cart" class="cart-icon">
       </button>
     </ng-template>
   </section>

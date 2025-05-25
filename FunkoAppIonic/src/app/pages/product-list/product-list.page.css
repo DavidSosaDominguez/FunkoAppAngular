@@ -1,4 +1,8 @@
 /* Estilos específicos para la lista de productos */
+ion-card {
+  background-color: #D4EFFF;
+}
+
 #product_list_container {
   width: 80%;
   margin: 40px auto;

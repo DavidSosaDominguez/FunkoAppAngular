@@ -1,26 +1,106 @@
-<ion-content [fullscreen]="true">
+<ion-header>
+  <app-header></app-header>
+</ion-header>
 
-  <main>
+<ion-content [fullscreen]="true" class="ion-padding">
 
-    <article id="register_box">
-      <h1 id="register_text">Sign Up</h1>
+  <ion-card id="register_box">
+    <ion-card-header>
+      <ion-card-title id="register_text" class="ion-text-center">Sign Up</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="input_form" id="signup_form">
 
-        <span class="profile-picture-wrapper">
-          <img id="profile-image" class="user-image" [src]="profileImageUrl || 'assets/images/profile.png'" alt="user picture" />
-          <button class="edit-icon" type="button" (click)="selectImage()">✎</button>
-          <input type="file" accept="image/*" id="select-picture-input" name="profile-picture" style="display: none;" (change)="onImageSelected($event)" #fileInput />
-        </span>
+        <!-- Profile picture & upload -->
+        <div class="profile-picture-wrapper ion-text-center">
+          <ion-img
+            id="profile-image"
+            class="user-image"
+            [src]="profileImageUrl || 'assets/images/profile.png'"
+            alt="user picture">
+          </ion-img>
 
-        <input id="name" type="text" placeholder="Name*" name="name" pattern="[a-zA-Z]+" required title="Insert your name (only alphabetic characters)" formControlName="name" />
-        <input id="surname" type="text" placeholder="Surname*" name="surname" pattern="[a-zA-Z]+" required title="Insert your surname (only alphabetic characters)" formControlName="surname" />
-        <input id="email" type="email" placeholder="Email*" name="email" required formControlName="email" />
-        <input id="password" type="password" placeholder="Password*" name="password" required formControlName="password" />
-        <button type="submit" id="submit_button">Submit</button>
+          <ion-button
+            class="edit-icon"
+            size="small"
+            fill="clear"
+            type="button"
+            (click)="selectImage()">
+            ✎
+          </ion-button>
+
+          <input
+            type="file"
+            accept="image/*"
+            id="select-picture-input"
+            name="profile-picture"
+            hidden
+            (change)="onImageSelected($event)"
+            #fileInput>
+        </div>
+
+        <!-- Form Inputs -->
+        <ion-item>
+          <ion-input
+            id="name"
+            type="text"
+            placeholder="Name*"
+            name="name"
+            pattern="[a-zA-Z]+"
+            required
+            title="Insert your name (only alphabetic characters)"
+            formControlName="name">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            id="surname"
+            type="text"
+            placeholder="Surname*"
+            name="surname"
+            pattern="[a-zA-Z]+"
+            required
+            title="Insert your surname (only alphabetic characters)"
+            formControlName="surname">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            id="email"
+            type="email"
+            placeholder="Email*"
+            name="email"
+            required
+            formControlName="email">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            id="password"
+            type="password"
+            placeholder="Password*"
+            name="password"
+            required
+            formControlName="password">
+          </ion-input>
+        </ion-item>
+
+        <!-- Submit Button -->
+        <div class="ion-padding-top ion-text-center">
+          <ion-button type="submit" id="submit_button" expand="block">Submit</ion-button>
+        </div>
 
       </form>
-    </article>
-
-  </main>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
+
+<ion-footer>
+  <app-footer></app-footer>
+</ion-footer>
+

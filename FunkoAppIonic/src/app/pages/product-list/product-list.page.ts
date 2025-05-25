@@ -5,11 +5,13 @@ import { FiguresService } from '../../services/figures.service';
 import { Funko } from '../../interfaces/funko';
 import {IonicModule} from "@ionic/angular";
 import {ProductComponent} from "../../components/product/product.component";
+import {HeaderComponent} from "../../components/header/header.component";
+import {FooterComponent} from "../../components/footer/footer.component";
 
 @Component({
   selector: 'product-list',
   standalone: true,
-  imports: [CommonModule, IonicModule, ProductComponent],
+  imports: [CommonModule, IonicModule, ProductComponent, HeaderComponent, FooterComponent],
   templateUrl: './product-list.page.html',
   styleUrls: ['./product-list.page.css']
 })

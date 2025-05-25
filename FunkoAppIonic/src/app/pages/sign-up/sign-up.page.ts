@@ -5,12 +5,16 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {LogInErrorComponent} from "../../components/log-in-error/log-in-error.component";
 import {IonicModule} from "@ionic/angular";
+import {HeaderComponent} from "../../components/header/header.component";
+import {FooterComponent} from "../../components/footer/footer.component";
 
 @Component({
   selector: 'sign-up',
   imports: [
     ReactiveFormsModule,
-    IonicModule
+    IonicModule,
+    HeaderComponent,
+    FooterComponent
   ],
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.css']

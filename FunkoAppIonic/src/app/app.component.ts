@@ -10,7 +10,7 @@ import {ShoppingResumeComponent} from './components/shopping-resume/shopping-res
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule, IonicModule, HeaderComponent, FooterComponent, FilterBoxComponent, ShoppingResumeComponent],
+  imports: [CommonModule, RouterModule, IonicModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
