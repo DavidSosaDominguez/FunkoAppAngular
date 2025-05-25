@@ -14,4 +14,7 @@
     <h3 class="product_description">{{ funko.series }}</h3>
     <button (click)="funko.id ? viewProductDetailed() : null" class="product_button">View</button>        </section>
 </section>
-<p class="product_price">{{ funko.price }}€</p>
+<section id="price_units">
+    <p class="product_price">{{ funko.price }}€</p>
+    <p id = "units">Available: {{funko.quantity}}</p>
+</section>
