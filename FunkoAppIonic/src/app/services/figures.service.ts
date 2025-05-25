@@ -30,4 +30,8 @@ export class FiguresService {
     const q = query(this.productsCollection, where('series', '==', series));
     return collectionData(q) as Observable<Funko[]>;
   }
+
+  modifyQuantity(item: Funko) {
+
+  }
 }

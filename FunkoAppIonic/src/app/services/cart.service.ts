@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Funko } from '../interfaces/funko';
+import {FiguresService} from "./figures.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { Funko } from '../interfaces/funko';
 export class CartService {
   private cartItemsSubject = new BehaviorSubject<Funko[]>([]);
   private isCartVisibleSubject = new BehaviorSubject<boolean>(false);
+  figuresService = inject(FiguresService);
 
   // Exponer como Observables
   cartItems$ = this.cartItemsSubject.asObservable();
@@ -136,5 +138,13 @@ export class CartService {
       total: this.totalAmountSubject.value,
       count: this.itemsCountSubject.value
     };
+  }
+
+  buy() {
+    /*actualizar el número de funkos restantes*/
+    for (let item of this.cartItemsSubject.value) {
+      this.figuresService.modifyQuantity(item).then(() => {});
+    }
+    this.clearCart();
   }
 }
